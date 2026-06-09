@@ -8,6 +8,34 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Jua&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;700;900&display=swap"
         rel="stylesheet">
+
+    <!-- ═══════════ FIREBASE SDK ═══════════ -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, set, get, onValue, update, remove, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBTL7nxEZb3xDcBG-WRIbeg0gujD0CjSk8",
+            authDomain: "eraser-gacha.firebaseapp.com",
+            databaseURL: "https://eraser-gacha-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "eraser-gacha",
+            storageBucket: "eraser-gacha.firebasestorage.app",
+            messagingSenderId: "697774293335",
+            appId: "1:697774293335:web:296881f403fe26876d7e12",
+            measurementId: "G-K2ZYD4S5RF"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const fbdb = getDatabase(app);
+        window._fb = {
+            db: fbdb,
+            ref: (path) => ref(fbdb, path),
+            set, get, onValue, update, remove, push, onChildAdded
+        };
+        window._fbReady = true;
+        document.dispatchEvent(new Event('firebase-ready'));
+    </script>
+
     <style>
         :root {
             --cream: #fff4d6;
@@ -405,7 +433,6 @@
             display: block;
         }
 
-        /* LOGIN */
         #login-screen {
             position: absolute;
             inset: 0;
@@ -460,7 +487,6 @@
             padding: 10px;
         }
 
-        /* ITEM GRID */
         .item-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -549,7 +575,6 @@
             font-weight: 900;
         }
 
-        /* FUSION */
         .fusion-info {
             background: linear-gradient(180deg, var(--cream), #ffd89e);
             border: 3px solid var(--brown-dk);
@@ -566,7 +591,6 @@
             color: var(--red-dk);
         }
 
-        /* ARENA */
         .arena-grid {
             display: grid;
             grid-template-columns: 1fr 1.2fr;
@@ -747,14 +771,12 @@
             box-shadow: 0 3px 0 var(--brown-dk);
         }
 
-        /* DUNGEON */
         .dungeon-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
 
-        /* QUEST */
         .q-item {
             background: linear-gradient(180deg, var(--cream), #ffd89e);
             border: 3px solid var(--brown-dk);
@@ -836,7 +858,6 @@
             box-shadow: 0 3px 0 #555;
         }
 
-        /* MINE */
         .mine-scene {
             background: linear-gradient(180deg, #5d4037, #3e2723);
             border: 5px solid var(--brown-dk);
@@ -868,7 +889,6 @@
             opacity: .85;
         }
 
-        /* WORLD */
         .world-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -927,7 +947,6 @@
             margin-top: 4px;
         }
 
-        /* ATTEND */
         .attend-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -996,7 +1015,6 @@
             font-size: .75rem;
         }
 
-        /* SHOP */
         .shop-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1048,7 +1066,6 @@
             background: linear-gradient(180deg, var(--blue), var(--blue-dk));
         }
 
-        /* CODEX */
         .codex-filter {
             display: flex;
             gap: 5px;
@@ -1074,7 +1091,6 @@
             text-shadow: 1px 1px 0 #000;
         }
 
-        /* PASS */
         .pass-xp-bar {
             width: 100%;
             height: 14px;
@@ -1161,7 +1177,6 @@
             font-weight: 900;
         }
 
-        /* GUILD */
         .guild-card {
             background: linear-gradient(180deg, var(--cream), #ffd89e);
             border: 4px solid var(--brown-dk);
@@ -1200,7 +1215,6 @@
             border: 2px solid var(--brown-dk);
         }
 
-        /* RAID */
         .raid-boss-card {
             background: linear-gradient(180deg, #3e2723, #5d4037);
             border: 5px solid var(--red-dk);
@@ -1243,7 +1257,6 @@
             font-size: .78rem;
         }
 
-        /* MODAL */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -1294,7 +1307,6 @@
             box-shadow: 0 2px 0 var(--brown-dk);
         }
 
-        /* DECK MODAL */
         .deck-modal-overlay {
             position: fixed;
             inset: 0;
@@ -1355,7 +1367,6 @@
             object-fit: contain;
         }
 
-        /* ADMIN */
         .admin-overlay {
             position: fixed;
             inset: 0;
@@ -1484,7 +1495,6 @@
             box-shadow: inset 0 3px 7px rgba(0, 0, 0, .15);
         }
 
-        /* BATTLE */
         .battle-overlay {
             position: fixed;
             inset: 0;
@@ -1680,9 +1690,6 @@
             }
         }
 
-        /* ═══════════════════════════════════════════
-   GACHA FULLSCREEN SYSTEM
-═══════════════════════════════════════════ */
         #gacha-fullscreen {
             position: fixed;
             inset: 0;
@@ -1695,14 +1702,11 @@
             overflow: hidden;
         }
 
-        /* 배경 성운 효과 */
         #gacha-fullscreen::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse at 20% 50%, rgba(120, 40, 200, .15) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(200, 40, 80, .12) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 20%, rgba(40, 120, 255, .1) 0%, transparent 50%);
+            background: radial-gradient(ellipse at 20% 50%, rgba(120, 40, 200, .15) 0%, transparent 60%), radial-gradient(ellipse at 80% 50%, rgba(200, 40, 80, .12) 0%, transparent 60%), radial-gradient(ellipse at 50% 20%, rgba(40, 120, 255, .1) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -1747,7 +1751,6 @@
             color: #fff;
         }
 
-        /* 배율 표시 */
         .multiplier-display {
             position: absolute;
             top: 70px;
@@ -1777,7 +1780,6 @@
             text-transform: uppercase;
         }
 
-        /* 중앙 슬롯 영역 */
         .slot-arena {
             width: 100%;
             max-width: 480px;
@@ -1799,7 +1801,6 @@
             background: rgba(255, 255, 255, .03);
         }
 
-        /* 위아래 페이드 */
         .slot-window::before,
         .slot-window::after {
             content: '';
@@ -1822,7 +1823,6 @@
             background: linear-gradient(0deg, rgba(10, 6, 8, 1), transparent);
         }
 
-        /* 중앙 선택 라인 */
         .slot-cursor {
             position: absolute;
             top: 50%;
@@ -1886,7 +1886,6 @@
             white-space: nowrap;
         }
 
-        /* 등급별 색상 */
         .grade-Trash {
             color: #888;
             text-shadow: none;
@@ -1952,7 +1951,6 @@
             text-shadow: 0 0 20px rgba(252, 211, 77, .9), 0 0 40px rgba(252, 211, 77, .5);
         }
 
-        /* 뽑기 버튼 */
         .pull-btns-row {
             display: flex;
             gap: 12px;
@@ -1996,19 +1994,11 @@
             box-shadow: 0 4px 20px rgba(167, 139, 250, .2), inset 0 1px 0 rgba(255, 255, 255, .1);
         }
 
-        .pull-btn-1:hover {
-            box-shadow: 0 6px 30px rgba(167, 139, 250, .4), inset 0 1px 0 rgba(255, 255, 255, .15);
-        }
-
         .pull-btn-10 {
             background: linear-gradient(135deg, #2d1b00, #4a2c00);
             color: #fcd34d;
             border: 1px solid rgba(252, 211, 77, .3);
             box-shadow: 0 4px 20px rgba(252, 211, 77, .2), inset 0 1px 0 rgba(255, 255, 255, .1);
-        }
-
-        .pull-btn-10:hover {
-            box-shadow: 0 6px 30px rgba(252, 211, 77, .4), inset 0 1px 0 rgba(255, 255, 255, .15);
         }
 
         .pull-btn-sub {
@@ -2020,7 +2010,6 @@
             letter-spacing: 0;
         }
 
-        /* 결과 표시 영역 */
         .result-reveal {
             position: absolute;
             inset: 0;
@@ -2124,7 +2113,6 @@
             background: rgba(255, 255, 255, .05);
         }
 
-        /* MULTIPLIER 연출 */
         .mult-flash {
             position: fixed;
             inset: 0;
@@ -2184,7 +2172,6 @@
             animation: fadeUp .5s .3s both;
         }
 
-        /* 암전 연출 */
         #blackout-overlay {
             position: fixed;
             inset: 0;
@@ -2284,7 +2271,6 @@
             color: #fff;
         }
 
-        /* 슬롯 아이템 클리커 */
         .clicker-scene {
             background: linear-gradient(180deg, #87ceeb, #5dade2);
             border: 5px solid var(--brown-dk);
@@ -2361,7 +2347,6 @@
             opacity: .5;
         }
 
-        /* 파티클 */
         #particle-canvas {
             position: fixed;
             top: 0;
@@ -2390,7 +2375,6 @@
             font-size: 1.2rem;
         }
 
-        /* 스크롤바 */
         .rank-scroll::-webkit-scrollbar,
         .guild-member-list::-webkit-scrollbar,
         .chat-box::-webkit-scrollbar,
@@ -2420,7 +2404,6 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* 배율 표시 - 색상 */
         .mult-1 {
             color: rgba(255, 255, 255, .5);
         }
@@ -2493,7 +2476,6 @@
             }
         }
 
-        /* 다중 결과 */
         .multi-results-grid {
             display: flex;
             flex-wrap: wrap;
@@ -2544,12 +2526,39 @@
                 opacity: 1;
             }
         }
+
+        /* Firebase 상태 표시 */
+        #fb-status {
+            position: fixed;
+            bottom: 130px;
+            right: 10px;
+            z-index: 50;
+            background: rgba(74, 44, 23, .9);
+            border: 2px solid var(--brown-dk);
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: .65rem;
+            color: var(--cream);
+            font-weight: 900;
+            display: none;
+        }
+
+        #fb-status.online {
+            border-color: var(--green-dk);
+            color: var(--green);
+        }
+
+        #fb-status.offline {
+            border-color: var(--red-dk);
+            color: var(--red);
+        }
     </style>
 </head>
 
 <body>
     <canvas id="particle-canvas"></canvas>
     <div id="sound-btn" onclick="toggleSound()">🔊</div>
+    <div id="fb-status">🔥 FB</div>
 
     <!-- LOGIN -->
     <div id="login-screen">
@@ -2584,7 +2593,6 @@
                 <button class="top-btn red" onclick="doLogout()">🚪 로그아웃</button>
             </div>
         </div>
-
         <div class="main-body">
             <div class="sidebar" id="sidebar">
                 <button class="sb-btn active" data-tab="arena" onclick="switchSide('arena')"><span
@@ -2617,9 +2625,7 @@
                 <button class="sb-btn" data-tab="minigame" onclick="switchSide('minigame')"><span
                         class="si">🎮</span>미니게임</button>
             </div>
-
             <div class="content-area" id="content-area">
-                <!-- ARENA -->
                 <div class="screen active" id="screen-arena">
                     <h2 class="screen-title">⚔️ 부유 요새 아레나</h2>
                     <div class="arena-grid">
@@ -2628,8 +2634,8 @@
                             <div style="text-align:center;font-size:.88rem;color:var(--brown-dk);font-weight:900;"
                                 id="arena-rank-txt">🥉 브론즈 (1000 RP)</div>
                             <div class="avatar-platform" id="arena-platform">
-                                <div style="font-size:.72rem;color:var(--cream);padding:10px;font-weight:bold;">⚔️
-                                    공격 편대가 비어있습니다.</div>
+                                <div style="font-size:.72rem;color:var(--cream);padding:10px;font-weight:bold;">⚔️ 공격
+                                    편대가 비어있습니다.</div>
                             </div>
                             <div class="deck-btns">
                                 <button class="deck-btn atk" onclick="openDeckBuilder('attack')">⚔️ 공격 덱<br><span
@@ -2642,8 +2648,8 @@
                                     style="color:var(--gold);cursor:pointer;" onclick="buyArenaTickets()">[충전
                                     🪙50]</span></div>
                             <div>
-                                <div style="font-size:.72rem;font-weight:900;color:var(--red-dk);margin-bottom:2px;">
-                                    🛡️ 최근 요새 방어 보고</div>
+                                <div style="font-size:.72rem;font-weight:900;color:var(--red-dk);margin-bottom:2px;">🛡️
+                                    최근 요새 방어 보고</div>
                                 <div class="def-log" id="def-log-box">
                                     <div style="color:var(--cream);text-align:center;padding-top:12px;">침공 기록이 없습니다.
                                     </div>
@@ -2654,36 +2660,29 @@
                             <div class="podium-zone" id="podium-zone"></div>
                             <div
                                 style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                                <span style="font-weight:900;color:var(--brown-dk);font-size:.88rem;">🏆 전 서버
-                                    서열</span>
+                                <span style="font-weight:900;color:var(--brown-dk);font-size:.88rem;">🏆 전 서버 서열</span>
                                 <button class="btn sm gold" onclick="renderOpponentBoard()">🔄 동기화</button>
                             </div>
                             <div class="rank-scroll" id="opponent-board"></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- DUNGEON -->
                 <div class="screen" id="screen-dungeon">
                     <h2 class="screen-title">🏰 심연의 던전</h2>
                     <div class="card">
                         <div class="card-title">🏰 심연의 던전</div>
-                        <div style="font-size:.78rem;color:var(--brown);margin-bottom:9px;font-weight:bold;">공격 덱
-                            3칸을 채운 뒤 입장 가능 | 층수×🪙30 소모</div>
+                        <div style="font-size:.78rem;color:var(--brown);margin-bottom:9px;font-weight:bold;">공격 덱 3칸을 채운
+                            뒤 입장 가능 | 층수×🪙30 소모</div>
                         <div
                             style="background:linear-gradient(180deg,var(--gold),var(--gold-dk));border:3px solid var(--brown-dk);border-radius:10px;padding:6px 11px;margin-bottom:10px;font-size:.83rem;color:var(--brown-dk);font-weight:900;">
                             🏆 최고 클리어: <span id="dungeon-best">0층</span></div>
                         <div class="dungeon-grid" id="dungeon-floor-grid"></div>
                     </div>
                 </div>
-
-                <!-- RAID -->
                 <div class="screen" id="screen-raid">
                     <h2 class="screen-title">👹 서버 공동 레이드</h2>
                     <div id="raid-content"></div>
                 </div>
-
-                <!-- COLLECTION -->
                 <div class="screen" id="screen-collection">
                     <h2 class="screen-title">🎒 보유 지우개 배낭</h2>
                     <div class="card">
@@ -2694,34 +2693,26 @@
                         <div class="item-grid" id="collection-grid"></div>
                     </div>
                 </div>
-
-                <!-- FUSION -->
                 <div class="screen" id="screen-fusion">
                     <h2 class="screen-title">⚗️ 합성소</h2>
                     <div class="card">
                         <div class="card-title">⚗️ 합성소</div>
-                        <div class="fusion-info"><b>합성 규칙:</b><br>• 같은 지우개 <b>3개</b> → 다음 단계로 합성<br>•
-                            <b>⭐→⭐⭐→⭐⭐⭐</b> (3성까지)<br>• 3성 합성 → <b>다음 티어 1성</b>으로 승급
-                        </div>
+                        <div class="fusion-info"><b>합성 규칙:</b><br>• 같은 지우개 <b>3개</b> → 다음 단계로 합성<br>• <b>⭐→⭐⭐→⭐⭐⭐</b>
+                            (3성까지)<br>• 3성 합성 → <b>다음 티어 1성</b>으로 승급</div>
                         <div class="item-grid" id="fusion-grid" style="max-height:370px;"></div>
                     </div>
                 </div>
-
-                <!-- CODEX -->
                 <div class="screen" id="screen-codex">
                     <h2 class="screen-title">📖 지우개 도감</h2>
                     <div class="card">
                         <div class="card-title">📖 도감</div>
-                        <div style="font-size:.78rem;color:var(--brown);margin-bottom:9px;font-weight:bold;">획득:
-                            <span id="codex-count">0</span> / <span id="codex-total">0</span> &nbsp;|&nbsp; 보너스:
-                            <span id="codex-bonus" style="color:var(--red-dk);font-weight:900;">없음</span>
-                        </div>
+                        <div style="font-size:.78rem;color:var(--brown);margin-bottom:9px;font-weight:bold;">획득: <span
+                                id="codex-count">0</span> / <span id="codex-total">0</span> &nbsp;|&nbsp; 보너스: <span
+                                id="codex-bonus" style="color:var(--red-dk);font-weight:900;">없음</span></div>
                         <div class="codex-filter" id="codex-filter"></div>
                         <div class="item-grid" style="grid-template-columns:repeat(4,1fr);" id="codex-grid"></div>
                     </div>
                 </div>
-
-                <!-- WORLD -->
                 <div class="screen" id="screen-world">
                     <h2 class="screen-title">🗺️ 미지의 대륙 탐험</h2>
                     <div class="card">
@@ -2733,8 +2724,6 @@
                         <div class="world-grid" id="world-grid"></div>
                     </div>
                 </div>
-
-                <!-- MINE -->
                 <div class="screen" id="screen-mine">
                     <h2 class="screen-title">⛏️ 왕국의 광산</h2>
                     <div class="mine-scene">
@@ -2758,21 +2747,16 @@
                         </div>
                         <div style="font-size:.78rem;margin-bottom:9px;color:var(--cream);">최대 저장량: <span
                                 id="mine-cap">500</span> | 상태: <span id="mine-status">대기중</span></div>
-                        <button class="btn green" style="margin-bottom:7px;" onclick="harvestMine()">⛏️
-                            수확하기</button>
+                        <button class="btn green" style="margin-bottom:7px;" onclick="harvestMine()">⛏️ 수확하기</button>
                         <button class="btn purple" style="width:100%;" onclick="upgradeMine()">⬆️ 업그레이드 <span
                                 id="mine-up-cost">(🪙500)</span></button>
                         <div style="margin-top:7px;font-size:.7rem;color:#ffd89e;">💡 오프라인에서도 자동으로 자원을 모읍니다!</div>
                     </div>
                 </div>
-
-                <!-- GUILD -->
                 <div class="screen" id="screen-guild">
                     <h2 class="screen-title">🏰 길드 시스템</h2>
                     <div id="guild-content"></div>
                 </div>
-
-                <!-- QUEST -->
                 <div class="screen" id="screen-quest">
                     <h2 class="screen-title">📜 오늘의 임무</h2>
                     <div class="card">
@@ -2780,8 +2764,6 @@
                         <div id="quest-list"></div>
                     </div>
                 </div>
-
-                <!-- ACHIEVEMENT -->
                 <div class="screen" id="screen-achievement">
                     <h2 class="screen-title">🏆 명예의 전당 (업적)</h2>
                     <div class="card">
@@ -2789,8 +2771,6 @@
                         <div id="ach-list"></div>
                     </div>
                 </div>
-
-                <!-- PASS -->
                 <div class="screen" id="screen-pass">
                     <h2 class="screen-title">🎫 왕국 패스</h2>
                     <div class="card">
@@ -2800,7 +2780,8 @@
                                 <div style="font-size:.83rem;font-weight:900;color:var(--brown-dk);">패스 레벨: <span
                                         id="pass-lv" style="color:var(--red-dk);">1</span></div>
                                 <div style="font-size:.72rem;color:var(--brown);">XP: <span id="pass-xp-txt">0</span> /
-                                    <span id="pass-xp-need">100</span></div>
+                                    <span id="pass-xp-need">100</span>
+                                </div>
                             </div>
                             <div id="pass-prem-status" style="font-size:.83rem;font-weight:900;"></div>
                         </div>
@@ -2821,13 +2802,11 @@
                             onclick="buyPremiumPass()">👑 프리미엄 패스 구매 (💎200)</button>
                     </div>
                 </div>
-
-                <!-- MINIGAME -->
                 <div class="screen" id="screen-minigame">
                     <h2 class="screen-title">🎮 지우개 클리커</h2>
                     <div class="clicker-scene">
-                        <div style="font-size:.78rem;color:var(--brown-dk);margin-bottom:9px;font-weight:bold;">🎁
-                            클릭 포인트를 모아 보상으로 교환!</div>
+                        <div style="font-size:.78rem;color:var(--brown-dk);margin-bottom:9px;font-weight:bold;">🎁 클릭
+                            포인트를 모아 보상으로 교환!</div>
                         <span class="clicker-eraser" id="clicker-btn" onclick="clickEraser()">🍙</span>
                         <div class="clicker-stats">
                             <div class="cs-item">
@@ -2846,16 +2825,13 @@
                         <div class="clicker-ups" id="clicker-ups"></div>
                         <div style="margin-top:10px;">
                             <div class="card-title"
-                                style="background:linear-gradient(180deg,var(--gold),var(--gold-dk));">🎁 포인트 교환소
-                            </div>
+                                style="background:linear-gradient(180deg,var(--gold),var(--gold-dk));">🎁 포인트 교환소</div>
                             <div id="clicker-rewards"
-                                style="display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:7px;">
-                            </div>
+                                style="display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:7px;"></div>
                         </div>
                     </div>
                 </div>
-            </div><!-- /content-area -->
-
+            </div>
             <div class="bottom-nav" id="bottom-nav-wrap">
                 <button class="bn-btn" onclick="openBottomModal('attend')"><span class="bi">🎁</span>출석</button>
                 <button class="bn-btn" onclick="openBottomModal('shop')"><span class="bi">🛒</span>상점</button>
@@ -2868,53 +2844,38 @@
         </div>
     </div>
 
-    <!-- ═══════════ GACHA FULLSCREEN ═══════════ -->
+    <!-- GACHA FULLSCREEN -->
     <div id="gacha-fullscreen">
         <div class="gacha-fs-header">
             <div class="gacha-fs-title">✦ Eraser Sanctum ✦</div>
             <div class="gacha-close-btn" onclick="closeGachaFS()">✕</div>
         </div>
-
         <div class="multiplier-display" id="mult-display">
-            <div class="mult-value mult-1" id="mult-value-txt">1<span style="font-size:.5em;opacity:.6;">×</span>
-            </div>
+            <div class="mult-value mult-1" id="mult-value-txt">1<span style="font-size:.5em;opacity:.6;">×</span></div>
             <div class="mult-label">LUCK MULTIPLIER</div>
         </div>
-
         <div class="slot-arena" id="slot-arena">
             <div class="slot-window">
                 <div class="slot-cursor"></div>
                 <div class="slot-reel" id="slot-reel"></div>
             </div>
         </div>
-
         <div class="pull-btns-row" id="pull-btns-row">
-            <button class="pull-btn pull-btn-1" onclick="doPull(1)">
-                DRAW × 1
-                <span class="pull-btn-sub">💎10 또는 무료권 1</span>
-            </button>
-            <button class="pull-btn pull-btn-10" onclick="doPull(10)">
-                DRAW × 10
-                <span class="pull-btn-sub">💎80</span>
-            </button>
+            <button class="pull-btn pull-btn-1" onclick="doPull(1)">DRAW × 1<span class="pull-btn-sub">💎10 또는 무료권
+                    1</span></button>
+            <button class="pull-btn pull-btn-10" onclick="doPull(10)">DRAW × 10<span
+                    class="pull-btn-sub">💎80</span></button>
         </div>
-
         <div
             style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.7rem;color:rgba(255,255,255,.2);letter-spacing:3px;white-space:nowrap;">
-            보유 무료권: <span id="fs-free-count" style="color:rgba(255,200,61,.4);">0</span>
-        </div>
-
-        <!-- 단일 결과 표시 -->
+            보유 무료권: <span id="fs-free-count" style="color:rgba(255,200,61,.4);">0</span></div>
         <div class="result-reveal" id="result-reveal">
             <div class="result-grade-txt" id="result-grade-txt"></div>
-            <div class="result-img-wrap" id="result-img-wrap">
-                <img id="result-img" src="" style="width:160px;height:160px;object-fit:contain;">
-            </div>
+            <div class="result-img-wrap" id="result-img-wrap"><img id="result-img" src=""
+                    style="width:160px;height:160px;object-fit:contain;"></div>
             <div class="result-name" id="result-name"></div>
             <button class="result-continue-btn" id="result-continue-btn" onclick="hideResult()">CONTINUE ›</button>
         </div>
-
-        <!-- 10연 결과 -->
         <div class="result-reveal" id="multi-reveal">
             <div
                 style="font-family:'Cinzel Decorative',serif;font-size:1.4rem;color:rgba(255,200,61,.9);letter-spacing:4px;margin-bottom:16px;">
@@ -2925,15 +2886,12 @@
         </div>
     </div>
 
-    <!-- 암전 오버레이 -->
     <div id="blackout-overlay">
         <div class="blackout-x" id="blackout-x">✕</div>
         <div class="blackout-subtitle">THRESHOLD REACHED</div>
         <div class="blackout-result" id="blackout-result"></div>
         <button class="blackout-claim-btn" id="blackout-claim-btn" onclick="claimBlackout()">RECEIVE FATE</button>
     </div>
-
-    <!-- 배율 선언 -->
     <div id="mult-announce-wrap" style="position:fixed;inset:0;z-index:940;pointer-events:none;display:none;">
         <div class="mult-flash" id="mult-flash-bg" style="background:#fcd34d;"></div>
         <div class="mult-announce">
@@ -2941,8 +2899,6 @@
             <div class="mult-sub-text">LUCK MULTIPLIED</div>
         </div>
     </div>
-
-    <!-- BOTTOM MODAL -->
     <div id="bottom-modal"
         style="display:none;position:fixed;inset:0;background:rgba(74,44,23,.88);z-index:400;flex-direction:column;justify-content:flex-end;align-items:stretch;backdrop-filter:blur(4px);">
         <div
@@ -2954,8 +2910,6 @@
             <div id="bottom-modal-content"></div>
         </div>
     </div>
-
-    <!-- ITEM DETAIL MODAL -->
     <div id="item-detail-modal" class="modal-overlay" style="display:none;">
         <div class="item-detail-box">
             <h2 id="d-title" style="font-size:.95rem;margin:0;color:var(--red-dk);">지우개 정보</h2>
@@ -2968,8 +2922,6 @@
             <button id="d-sell-btn" class="btn sm red" style="width:100%;">판매</button>
         </div>
     </div>
-
-    <!-- DECK MODAL -->
     <div id="deck-modal" class="deck-modal-overlay" style="display:none;">
         <div class="deck-modal-box">
             <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -2983,8 +2935,6 @@
             <div class="item-grid" id="deck-backpack" style="max-height:320px;overflow-y:auto;"></div>
         </div>
     </div>
-
-    <!-- BATTLE OVERLAY -->
     <div id="battle-overlay" class="battle-overlay" style="display:none;">
         <div class="battle-window">
             <div id="battle-title" style="color:var(--red-dk);font-size:1.1rem;font-weight:900;">⚔️ BATTLE</div>
@@ -3047,8 +2997,6 @@
             <button class="btn green" style="width:130px;margin:0 auto;" onclick="closeBattle()">확인</button>
         </div>
     </div>
-
-    <!-- ADMIN PW -->
     <div id="pw-modal" class="pw-modal" style="display:none;">
         <div class="pw-box">
             <div style="font-size:1.1rem;font-weight:900;color:var(--brown-dk);">🔐 관리자 인증</div>
@@ -3060,8 +3008,6 @@
             </div>
         </div>
     </div>
-
-    <!-- ADMIN MODAL -->
     <div id="admin-modal" class="admin-overlay" style="display:none;">
         <div class="admin-box">
             <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -3077,6 +3023,17 @@
 
     <script>
         // ════════════════════════════════════════════════════════
+        //  FIREBASE 헬퍼 (module에서 전달받은 _fb 사용)
+        // ════════════════════════════════════════════════════════
+        function fbRef(path) { return window._fb.ref(path); }
+        async function fbSet(path, data) { await window._fb.set(fbRef(path), data); }
+        async function fbGet(path) { const snap = await window._fb.get(fbRef(path)); return snap.exists() ? snap.val() : null; }
+        async function fbUpdate(path, data) { await window._fb.update(fbRef(path), data); }
+        async function fbRemove(path) { await window._fb.remove(fbRef(path)); }
+        function fbOnValue(path, cb) { return window._fb.onValue(fbRef(path), snap => cb(snap.exists() ? snap.val() : null)); }
+        async function fbPush(path, data) { await window._fb.push(fbRef(path), data); }
+
+        // ════════════════════════════════════════════════════════
         //  CONSTANTS
         // ════════════════════════════════════════════════════════
         const SKILL_POOL = [
@@ -3088,8 +3045,6 @@
             { id: 'chaos', name: '🌀 혼란', desc: '상대 스킬 50% 확률 무효화' },
             { id: 'freeze', name: '❄️ 빙결', desc: '30% 확률로 상대 무력화' },
         ];
-
-        // 등급 정의 (순서대로)
         const GRADES = [
             { id: 'Trash', label: 'TRASH', color: '#888', base: 40 },
             { id: 'Common', label: 'COMMON', color: '#c8c8c8', base: 60 },
@@ -3104,23 +3059,9 @@
             { id: 'Infinity', label: 'INFINITY', color: '#c084fc', base: 560 },
             { id: '???', label: '? ? ?', color: '#ffffff', base: 700 },
         ];
-
-        // 기본 확률 (합=100%)
-        const BASE_RATES = {
-            Trash: 40, Common: 25, Uncommon: 15, Epic: 10,
-            Mythic: 5, Legendary: 3, Beast: 0.5, Celestial: 0.1,
-            Ultra: 0.01, Hyper: 0.001, Infinity: 0.0001, '???': 0.00001
-        };
-
-        // 멀티플라이어 체인 확률 (다음 배율로 갈 확률%)
-        const CHAIN_RATES = {
-            1: 15, 2: 12, 4: 10, 8: 8, 16: 6, 32: 5, 64: 4, 128: 3, 256: 2, 512: 1, 1024: 0.5
-        };
+        const BASE_RATES = { Trash: 40, Common: 25, Uncommon: 15, Epic: 10, Mythic: 5, Legendary: 3, Beast: 0.5, Celestial: 0.1, Ultra: 0.01, Hyper: 0.001, Infinity: 0.0001, '???': 0.00001 };
+        const CHAIN_RATES = { 1: 15, 2: 12, 4: 10, 8: 8, 16: 6, 32: 5, 64: 4, 128: 3, 256: 2, 512: 1, 1024: 0.5 };
         const MULT_CHAIN = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
-
-        // 2048x 결과 확률
-        const ENDGAME_RATES = { '???': 50, 'COLOR': 25, 'NOT': 25 };
-
         const TIER_ORDER = ['Trash', 'Common', 'Uncommon', 'Epic', 'Mythic', 'Legendary', 'Beast', 'Celestial', 'Ultra', 'Hyper', 'Infinity', '???'];
         const SELL_PRICES = { Trash: 10, Common: 20, Uncommon: 30, Epic: 50, Mythic: 80, Legendary: 120, Beast: 200, Celestial: 350, Ultra: 500, Hyper: 800, Infinity: 1500, '???': 5000 };
         const TIER_COLORS = { Trash: '#888', Common: '#4a2c17', Uncommon: '#2d8e3c', Epic: '#6c3a82', Mythic: '#1f6dad', Legendary: '#e89c0f', Beast: '#c0392b', Celestial: '#5dade2', Ultra: '#e84393', Hyper: '#ff0080', Infinity: '#c084fc', '???': '#ffffff' };
@@ -3134,501 +3075,50 @@
         function todayStr() { return new Date().toDateString(); }
 
         // ════════════════════════════════════════════════════════
-        //  IndexedDB IMAGE STORE
+        //  IndexedDB IMAGE STORE (변경 없음)
         // ════════════════════════════════════════════════════════
-        let imgPool = { Trash: [], Common: [], Uncommon: [], Epic: [], Mythic: [], Legendary: [], Beast: [], Celestial: [], Ultra: [], Hyper: [], Infinity: [], SECRET_COLOR: [], SECRET_NOT: [] };
+        let imgPool = { Trash: [], Common: [], Uncommon: [], Epic: [], Mythic: [], Legendary: [], Beast: [], Celestial: [], Ultra: [], Hyper: [], Infinity: [], '???': [], SECRET_COLOR: [], SECRET_NOT: [] };
         let db = null;
 
         function openDB() {
             return new Promise((res, rej) => {
                 const req = indexedDB.open('EraserKingdom_v1', 1);
-                req.onupgradeneeded = e => {
-                    const d = e.target.result;
-                    if (!d.objectStoreNames.contains('images')) d.createObjectStore('images', { keyPath: 'id' });
-                };
+                req.onupgradeneeded = e => { const d = e.target.result; if (!d.objectStoreNames.contains('images')) d.createObjectStore('images', { keyPath: 'id' }); };
                 req.onsuccess = e => { db = e.target.result; res(db); };
                 req.onerror = () => rej(req.error);
             });
         }
-
         async function saveImgToDB(tier, imgObj) {
             return new Promise((res, rej) => {
                 const tx = db.transaction('images', 'readwrite');
-                const store = tx.objectStore('images');
-                store.put({ id: imgObj.id, tier, src: imgObj.src, name: imgObj.name });
-                tx.oncomplete = () => res();
-                tx.onerror = () => rej(tx.error);
+                tx.objectStore('images').put({ id: imgObj.id, tier, src: imgObj.src, name: imgObj.name });
+                tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error);
             });
         }
-
         async function deleteImgFromDB(id) {
             return new Promise((res, rej) => {
                 const tx = db.transaction('images', 'readwrite');
                 tx.objectStore('images').delete(id);
-                tx.oncomplete = () => res();
-                tx.onerror = () => rej(tx.error);
+                tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error);
             });
         }
-
         async function loadAllImgs() {
             return new Promise((res, rej) => {
                 const tx = db.transaction('images', 'readonly');
                 const req = tx.objectStore('images').getAll();
                 req.onsuccess = () => {
                     const all = req.result || [];
-                    // 초기화
                     Object.keys(imgPool).forEach(k => imgPool[k] = []);
-                    all.forEach(item => {
-                        if (imgPool[item.tier]) imgPool[item.tier].push({ id: item.id, src: item.src, name: item.name });
-                    });
+                    all.forEach(item => { if (imgPool[item.tier]) imgPool[item.tier].push({ id: item.id, src: item.src, name: item.name }); });
                     res();
                 };
                 req.onerror = () => rej(req.error);
             });
         }
-
         function flatPool() {
             let a = [];
             TIER_ORDER.forEach(t => imgPool[t]?.forEach(i => a.push({ id: i.id, src: i.src, tier: t, name: i.name })));
             return a;
-        }
-
-        // ════════════════════════════════════════════════════════
-        //  GACHA ENGINE
-        // ════════════════════════════════════════════════════════
-        let currentMult = 1;
-        let isRolling = false;
-        let pendingResults = [];
-        let blackoutResult = null;
-
-        // 배율에 따른 등급 확률 계산 (배율 높을수록 상위 등급으로 쏠림)
-        function getAdjustedRates(mult) {
-            const boost = Math.log2(mult || 1); // 0~11
-            const rates = {};
-            const keys = Object.keys(BASE_RATES);
-            keys.forEach((k, i) => {
-                // 배율 1 unit당 상위 0.5% 이동 느낌
-                rates[k] = Math.max(0.000001, BASE_RATES[k] * Math.pow(0.85, boost * (keys.length - 1 - i) * 0.08));
-            });
-            // 정규화
-            const total = Object.values(rates).reduce((a, b) => a + b, 0);
-            keys.forEach(k => rates[k] = rates[k] / total * 100);
-            return rates;
-        }
-
-        function rollGrade(mult) {
-            const rates = getAdjustedRates(mult);
-            const r = Math.random() * 100;
-            let acc = 0;
-            for (const [grade, rate] of Object.entries(rates)) {
-                acc += rate;
-                if (r < acc) return grade;
-            }
-            return 'Trash';
-        }
-
-        function rollChain(mult) {
-            const chainRate = CHAIN_RATES[mult] || 0;
-            return Math.random() * 100 < chainRate;
-        }
-
-        // 슬롯 릴 생성
-        function buildReel() {
-            const reel = document.getElementById('slot-reel');
-            reel.innerHTML = '';
-            const items = [
-                { label: '2×', cls: 'grade-2x' },
-                { label: 'TRASH', cls: 'grade-Trash' },
-                { label: 'COMMON', cls: 'grade-Common' },
-                { label: '2×', cls: 'grade-2x' },
-                { label: 'UNCOMMON', cls: 'grade-Uncommon' },
-                { label: 'EPIC', cls: 'grade-Epic' },
-                { label: '2×', cls: 'grade-2x' },
-                { label: 'MYTHIC', cls: 'grade-Mythic' },
-                { label: 'LEGENDARY', cls: 'grade-Legendary' },
-                { label: '2×', cls: 'grade-2x' },
-                { label: 'BEAST', cls: 'grade-Beast' },
-                { label: 'CELESTIAL', cls: 'grade-Celestial' },
-                { label: 'ULTRA', cls: 'grade-Ultra' },
-                { label: 'HYPER', cls: 'grade-Hyper' },
-                { label: 'INFINITY', cls: 'grade-Infinity' },
-                { label: '? ? ?', cls: 'grade-' },
-            ];
-            // 3번 반복 (루프감)
-            for (let r = 0; r < 3; r++) {
-                items.forEach(it => {
-                    const div = document.createElement('div');
-                    div.className = 'slot-item';
-                    div.innerHTML = `<span class="slot-text ${it.cls}">${it.label}</span>`;
-                    reel.appendChild(div);
-                });
-            }
-        }
-
-        function getReelItemIndex(label) {
-            const items = ['2×', 'TRASH', 'COMMON', '2×', 'UNCOMMON', 'EPIC', '2×', 'MYTHIC', 'LEGENDARY', '2×', 'BEAST', 'CELESTIAL', 'ULTRA', 'HYPER', 'INFINITY', '? ? ?'];
-            return items.indexOf(label);
-        }
-
-        function gradeToLabel(grade) {
-            if (grade === '???') return '? ? ?';
-            if (grade === '2x') return '2×';
-            return grade.toUpperCase();
-        }
-
-        // 슬롯 스핀 + 결과
-        function spinSlot(targetLabel, onDone) {
-            const reel = document.getElementById('slot-reel');
-            const itemH = 52;
-            const totalItems = 16;
-            // 목표 아이템 위치 (두번째 루프)
-            const targetIdx = getReelItemIndex(targetLabel) + totalItems;
-            const targetY = -(targetIdx * itemH) + (160 / 2) - (itemH / 2);
-
-            // 빠르게 돌다가 멈춤
-            reel.style.transition = 'none';
-            reel.style.transform = `translateY(0)`;
-
-            setTimeout(() => {
-                // 빠른 스핀
-                reel.style.transition = 'transform 0.3s linear';
-                reel.style.transform = `translateY(${-(totalItems * itemH * 0.3)}px)`;
-                setTimeout(() => {
-                    reel.style.transition = 'transform 1.8s cubic-bezier(0.25,0.1,0.1,1)';
-                    reel.style.transform = `translateY(${targetY}px)`;
-                    setTimeout(onDone, 1900);
-                }, 300);
-            }, 50);
-        }
-
-        // 메인 뽑기 로직 (1회)
-        async function doSinglePull() {
-            if (isRolling) return;
-
-            // 비용 처리
-            if (G.dailyPullsLeft >= 1) { G.dailyPullsLeft--; }
-            else { if (G.diamonds < 10) return alert('💎 다이아 부족 (필요: 10)'); G.diamonds -= 10; }
-
-            isRolling = true;
-            currentMult = 1;
-            updateMultDisplay(1);
-            showSlotArena();
-            updateFreeCount();
-
-            await runChainPull();
-        }
-
-        async function runChainPull() {
-            // 체인 or 지우개 결정
-            const goChain = rollChain(currentMult);
-
-            if (currentMult === 1024 && goChain) {
-                // 2048 도달!
-                await spinSlotAsync('2×');
-                await showMultiplierAnnounce(2048);
-                currentMult = 2048;
-                updateMultDisplay(2048);
-                await delay(500);
-                triggerBlackout();
-                return;
-            }
-
-            if (goChain && currentMult < 1024) {
-                // 다음 배율로
-                await spinSlotAsync('2×');
-                const nextIdx = MULT_CHAIN.indexOf(currentMult) + 1;
-                const nextMult = MULT_CHAIN[nextIdx] || currentMult * 2;
-                await showMultiplierAnnounce(nextMult);
-                currentMult = nextMult;
-                updateMultDisplay(nextMult);
-                await delay(400);
-                await runChainPull();
-            } else {
-                // 지우개 나옴
-                const grade = rollGrade(currentMult);
-                const label = gradeToLabel(grade);
-                await spinSlotAsync(label);
-                await delay(300);
-                grantEraser(grade);
-            }
-        }
-
-        function spinSlotAsync(label) {
-            return new Promise(res => spinSlot(label, res));
-        }
-
-        function delay(ms) { return new Promise(res => setTimeout(res, ms)); }
-
-        // 배율 표시 업데이트
-        function updateMultDisplay(mult) {
-            const el = document.getElementById('mult-value-txt');
-            const cls = 'mult-' + mult;
-            el.className = cls;
-            el.innerHTML = mult + '<span style="font-size:.5em;opacity:.6;">×</span>';
-        }
-
-        // 배율 선언 연출
-        function showMultiplierAnnounce(mult) {
-            return new Promise(res => {
-                const wrap = document.getElementById('mult-announce-wrap');
-                const txt = document.getElementById('mult-announce-text');
-                const flash = document.getElementById('mult-flash-bg');
-                txt.textContent = mult + '×';
-                txt.className = 'mult-announce-text';
-                // 색상 매핑
-                const colors = { 2: '#fcd34d', 4: '#fb923c', 8: '#f87171', 16: '#e879f9', 32: '#a78bfa', 64: '#60a5fa', 128: '#34d399', 256: '#ffffff', 512: '#f472b6', 1024: '#fcd34d', 2048: '#ff0080' };
-                flash.style.background = colors[mult] || '#fcd34d';
-                wrap.style.display = 'block';
-                snd('gacha');
-                setTimeout(() => { wrap.style.display = 'none'; res(); }, 900);
-            });
-        }
-
-        // 지우개 지급
-        function grantEraser(grade) {
-            const pool = flatPool();
-            const tierPool = pool.filter(x => x.tier === grade);
-            const usePool = tierPool.length ? tierPool : pool;
-
-            if (!usePool.length) {
-                alert(`[${grade}] 등급 이미지가 없습니다! 관리자 모드에서 추가해주세요.`);
-                isRolling = false;
-                return;
-            }
-
-            const t = usePool[Math.floor(Math.random() * usePool.length)];
-            const card = { id: uid(), imgId: t.id, tier: grade, stars: 1, power: calcPow(grade, 1), name: t.name, skills: rndSkills(grade) };
-            G.inventory.push(card);
-            if (!G.codexUnlocked.includes(t.id)) G.codexUnlocked.push(t.id);
-            G.achStats.gachaCount = (G.achStats.gachaCount || 0) + 1;
-            addPassXP(5); progressQuest('gacha', 1); checkAchs();
-
-            // 결과 공개 연출
-            showResult(grade, t, card);
-            particles();
-            snd('win');
-            updateUI();
-        }
-
-        function showSlotArena() {
-            document.getElementById('slot-arena').style.display = 'flex';
-            document.getElementById('pull-btns-row').style.display = 'none';
-            document.getElementById('result-reveal').style.display = 'none';
-            document.getElementById('multi-reveal').style.display = 'none';
-            buildReel();
-        }
-
-        function showResult(grade, imgData, card) {
-            const reveal = document.getElementById('result-reveal');
-            const gradeEl = document.getElementById('result-grade-txt');
-            const imgEl = document.getElementById('result-img');
-            const nameEl = document.getElementById('result-name');
-
-            const gradeInfo = GRADES.find(g => g.id === grade) || { label: grade, color: '#fff' };
-            gradeEl.textContent = gradeInfo.label;
-            gradeEl.style.color = gradeInfo.color;
-            gradeEl.style.textShadow = `0 0 40px ${gradeInfo.color}, 0 0 80px ${gradeInfo.color}60`;
-            imgEl.src = imgData.src;
-            imgEl.style.filter = `drop-shadow(0 0 30px ${gradeInfo.color})`;
-            nameEl.textContent = imgData.name;
-            nameEl.style.color = gradeInfo.color;
-
-            document.getElementById('slot-arena').style.display = 'none';
-            reveal.style.display = 'flex';
-            isRolling = false;
-        }
-
-        function hideResult() {
-            document.getElementById('result-reveal').style.display = 'none';
-            document.getElementById('slot-arena').style.display = 'flex';
-            document.getElementById('pull-btns-row').style.display = 'flex';
-            currentMult = 1;
-            updateMultDisplay(1);
-            buildReel();
-            updateUI();
-        }
-
-        // 10연 뽑기
-        async function doMultiPull() {
-            if (isRolling) return;
-            if (G.diamonds < 80) return alert('💎 부족 (필요: 80)');
-            G.diamonds -= 80;
-            isRolling = true;
-
-            const results = [];
-            const pool = flatPool();
-            if (!pool.length) { isRolling = false; return alert('이미지를 먼저 등록해주세요!'); }
-
-            // 10번 독립 롤 (체인 없이 기본 배율로 빠르게)
-            for (let i = 0; i < 10; i++) {
-                const grade = rollGrade(1);
-                const tierPool = pool.filter(x => x.tier === grade);
-                const usePool = tierPool.length ? tierPool : pool;
-                const t = usePool[Math.floor(Math.random() * usePool.length)];
-                const card = { id: uid(), imgId: t.id, tier: grade, stars: 1, power: calcPow(grade, 1), name: t.name, skills: rndSkills(grade) };
-                G.inventory.push(card);
-                if (!G.codexUnlocked.includes(t.id)) G.codexUnlocked.push(t.id);
-                results.push({ grade, img: t, card });
-            }
-
-            G.achStats.gachaCount = (G.achStats.gachaCount || 0) + 10;
-            addPassXP(50); progressQuest('gacha', 10); checkAchs();
-            showMultiResult(results);
-            particles(); snd('gacha'); updateUI();
-            isRolling = false;
-        }
-
-        function showMultiResult(results) {
-            const grid = document.getElementById('multi-results-grid');
-            grid.innerHTML = '';
-
-            document.getElementById('slot-arena').style.display = 'none';
-            document.getElementById('pull-btns-row').style.display = 'none';
-
-            results.forEach(r => {
-                const gradeInfo = GRADES.find(g => g.id === r.grade) || { label: r.grade, color: '#fff' };
-                const card = document.createElement('div');
-                card.className = 'mini-result-card';
-                card.innerHTML = `
-      <img src="${r.img.src}">
-      <div class="mini-grade-txt grade-${r.grade}" style="color:${gradeInfo.color};">${gradeInfo.label}</div>
-      <div style="font-size:.55rem;color:rgba(255,255,255,.5);margin-top:2px;">${r.img.name}</div>
-    `;
-                grid.appendChild(card);
-            });
-
-            document.getElementById('multi-reveal').style.display = 'flex';
-        }
-
-        function hideMultiResult() {
-            document.getElementById('multi-reveal').style.display = 'none';
-            document.getElementById('slot-arena').style.display = 'flex';
-            document.getElementById('pull-btns-row').style.display = 'flex';
-            currentMult = 1;
-            updateMultDisplay(1);
-            buildReel();
-            updateUI();
-        }
-
-        // 2048 암전 연출
-        function triggerBlackout() {
-            isRolling = false;
-            const overlay = document.getElementById('blackout-overlay');
-            const resultEl = document.getElementById('blackout-result');
-            const claimBtn = document.getElementById('blackout-claim-btn');
-            resultEl.style.display = 'none';
-            claimBtn.style.display = 'none';
-            overlay.style.display = 'flex';
-
-            // 3초 긴장 후 결과 공개
-            snd('lose');
-            setTimeout(() => {
-                const r = Math.random() * 100;
-                let result;
-                if (r < 50) result = '???';
-                else if (r < 75) result = 'COLOR';
-                else result = 'NOT';
-                blackoutResult = result;
-
-                resultEl.style.display = 'block';
-                if (result === 'COLOR') {
-                    resultEl.className = 'blackout-result color-grade';
-                    resultEl.textContent = '✦ COLOR ✦';
-                } else if (result === 'NOT') {
-                    resultEl.className = 'blackout-result not-grade';
-                    resultEl.textContent = '✕ NOT ✕';
-                } else {
-                    resultEl.className = 'blackout-result secret-grade';
-                    resultEl.textContent = '? ? ?';
-                }
-                setTimeout(() => { claimBtn.style.display = 'block'; }, 1000);
-                particles(); snd('win');
-            }, 3000);
-        }
-
-        function claimBlackout() {
-            const overlay = document.getElementById('blackout-overlay');
-            overlay.style.display = 'none';
-
-            const pool = flatPool();
-            if (blackoutResult === '???') {
-                const tierPool = pool.filter(x => x.tier === '???');
-                const usePool = tierPool.length ? tierPool : pool;
-                const t = usePool[Math.floor(Math.random() * usePool.length)];
-                const card = { id: uid(), imgId: t.id, tier: '???', stars: 1, power: calcPow('???', 1), name: t.name, skills: rndSkills('???') };
-                G.inventory.push(card);
-                showResult('???', t, card);
-            } else if (blackoutResult === 'COLOR') {
-                const colorPool = imgPool.SECRET_COLOR;
-                if (colorPool.length) {
-                    const t = colorPool[Math.floor(Math.random() * colorPool.length)];
-                    const card = { id: uid(), imgId: t.id, tier: 'COLOR', stars: 1, power: 9999, name: t.name, skills: rndSkills('???') };
-                    G.inventory.push(card);
-                    const gradeInfo = { label: 'COLOR', color: '#ff0080' };
-                    // 무지개 결과 표시
-                    const reveal = document.getElementById('result-reveal');
-                    document.getElementById('result-grade-txt').innerHTML = '<span style="background:linear-gradient(135deg,#ff0080,#ff8c00,#ffd700,#00ff88,#0080ff,#8000ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">✦ COLOR ✦</span>';
-                    document.getElementById('result-img').src = t.src;
-                    document.getElementById('result-name').textContent = t.name;
-                    document.getElementById('slot-arena').style.display = 'none';
-                    reveal.style.display = 'flex';
-                } else {
-                    alert('🌈 COLOR 등급 달성! 이미지를 관리자 모드에서 등록해주세요!');
-                }
-            } else {
-                const notPool = imgPool.SECRET_NOT;
-                if (notPool.length) {
-                    const t = notPool[Math.floor(Math.random() * notPool.length)];
-                    const card = { id: uid(), imgId: t.id, tier: 'NOT', stars: 1, power: 0, name: t.name, skills: [] };
-                    G.inventory.push(card);
-                    const reveal = document.getElementById('result-reveal');
-                    document.getElementById('result-grade-txt').innerHTML = '<span style="color:#ff3333;text-shadow:0 0 30px rgba(255,51,51,.8);">✕ NOT ✕</span>';
-                    document.getElementById('result-img').src = t.src;
-                    document.getElementById('result-name').textContent = t.name;
-                    document.getElementById('slot-arena').style.display = 'none';
-                    reveal.style.display = 'flex';
-                } else {
-                    alert('❌ NOT 등급 달성! 이미지를 관리자 모드에서 등록해주세요!');
-                }
-            }
-
-            G.achStats.gachaCount = (G.achStats.gachaCount || 0) + 1;
-            addPassXP(200); checkAchs(); updateUI();
-            document.getElementById('pull-btns-row').style.display = 'flex';
-        }
-
-        // 뽑기 진입점
-        function doPull(count) {
-            if (count === 1) doSinglePull();
-            else doMultiPull();
-        }
-
-        // 가챠 풀스크린 열기/닫기
-        function openGachaFS() {
-            if (!G.user) return;
-            const fs = document.getElementById('gacha-fullscreen');
-            fs.style.display = 'flex';
-            currentMult = 1;
-            isRolling = false;
-            updateMultDisplay(1);
-            buildReel();
-            document.getElementById('slot-arena').style.display = 'flex';
-            document.getElementById('pull-btns-row').style.display = 'flex';
-            document.getElementById('result-reveal').style.display = 'none';
-            document.getElementById('multi-reveal').style.display = 'none';
-            updateFreeCount();
-        }
-
-        function closeGachaFS() {
-            if (isRolling) return;
-            document.getElementById('gacha-fullscreen').style.display = 'none';
-            isRolling = false;
-            updateUI();
-        }
-
-        function updateFreeCount() {
-            const el = document.getElementById('fs-free-count');
-            if (el) el.textContent = G.dailyPullsLeft || 0;
         }
 
         // ════════════════════════════════════════════════════════
@@ -3658,14 +3148,38 @@
         let revengeTarget = null;
         let comboCount = 0, lastClickTime = 0, comboTimer = null;
         let _detailEraser = null;
+        let _fbUnsubscribers = []; // Firebase 리스너 정리용
 
         // ════════════════════════════════════════════════════════
-        //  SAVE / LOAD
+        //  SAVE / LOAD — Firebase Realtime Database
         // ════════════════════════════════════════════════════════
-        function saveG() { if (G.user) localStorage.setItem('gacha_v5_' + G.user, JSON.stringify(G)); }
-        function loadG(id) {
-            const raw = localStorage.getItem('gacha_v5_' + id);
-            if (raw) { try { const p = JSON.parse(raw); G = { ...G, ...p }; } catch (e) { } }
+        let _saveTimer = null;
+
+        function saveG() {
+            if (!G.user || !window._fbReady) return;
+            // 디바운스: 연속 저장 방지 (1초 후 한 번만)
+            clearTimeout(_saveTimer);
+            _saveTimer = setTimeout(async () => {
+                try {
+                    const data = JSON.parse(JSON.stringify(G));
+                    delete data.user; // user는 경로로 대신함
+                    await fbSet(`players/${G.user}`, data);
+                } catch (e) { console.warn('saveG error:', e); }
+            }, 1000);
+        }
+
+        async function loadG(id) {
+            if (!window._fbReady) return;
+            try {
+                const data = await fbGet(`players/${id}`);
+                if (data) {
+                    G = { ...G, ...data, user: id };
+                } else {
+                    G.user = id; // 새 유저 - 기본값 유지
+                }
+            } catch (e) { console.warn('loadG error:', e); }
+
+            // 타입 안전성 보장
             if (!Array.isArray(G.attackTeam)) G.attackTeam = [null, null, null];
             if (!Array.isArray(G.defenseTeam)) G.defenseTeam = [null, null, null];
             if (!Array.isArray(G.inventory)) G.inventory = [];
@@ -3678,6 +3192,356 @@
             if (!G.dungeonClearedToday) G.dungeonClearedToday = [];
             if (!G.attendClaimedDays) G.attendClaimedDays = [];
         }
+
+        // ════════════════════════════════════════════════════════
+        //  ARENA PROFILE — Firebase (멀티플레이 핵심)
+        // ════════════════════════════════════════════════════════
+        async function saveArenaProfile() {
+            if (!G.user || !window._fbReady) return;
+            try {
+                await fbSet(`arena/${G.user}`, {
+                    user: G.user,
+                    attackTeam: G.attackTeam,
+                    defenseTeam: G.defenseTeam,
+                    arenaPoints: G.arenaPoints
+                });
+            } catch (e) { console.warn('saveArenaProfile error:', e); }
+        }
+
+        async function renderOpponentBoard() {
+            const board = document.getElementById('opponent-board');
+            if (!board || !window._fbReady) return;
+            board.innerHTML = '<p style="text-align:center;padding:10px;color:var(--brown);font-weight:bold;">🔄 불러오는 중...</p>';
+
+            await saveArenaProfile();
+
+            try {
+                const allArena = await fbGet('arena');
+                if (!allArena) { board.innerHTML = '<p style="text-align:center;padding:20px;font-size:.8rem;color:var(--brown);font-weight:bold;">경쟁 국왕이 없습니다.</p>'; return; }
+
+                const opponents = Object.values(allArena).sort((a, b) => (b.arenaPoints || 1000) - (a.arenaPoints || 1000));
+                renderPodium(opponents);
+
+                const comps = opponents.filter(o => o.user !== G.user);
+                board.innerHTML = '';
+                if (!comps.length) { board.innerHTML = '<p style="text-align:center;padding:20px;font-size:.8rem;color:var(--brown);font-weight:bold;">경쟁 국왕이 없습니다.</p>'; return; }
+
+                const flat = flatPool();
+                comps.forEach(opp => {
+                    const rank = opponents.findIndex(o => o.user === opp.user) + 1;
+                    const card = document.createElement('div'); card.className = 'rank-row';
+                    let defPow = 0, prev = '';
+                    (opp.defenseTeam || []).forEach(s => {
+                        if (s) {
+                            defPow += calcPow(s.tier, s.stars || 1);
+                            const m = flat.find(f => f.id === s.imgId);
+                            prev += m ? `<img style="width:22px;height:22px;object-fit:contain;border-radius:5px;border:2px solid var(--brown-dk);background:var(--cream);" src="${m.src}">` : '';
+                        }
+                    });
+                    const ot = getTierInfo(opp.arenaPoints || 1000);
+                    card.innerHTML = `<div style="text-align:left;"><span style="font-weight:900;color:var(--brown-dk);font-size:.82rem;">${rank}위. 🏰 ${opp.user}</span><div style="font-size:.65rem;color:${ot.color};font-weight:900;">${ot.name} (${opp.arenaPoints || 1000} RP)</div></div><div style="display:flex;gap:2px;">${prev}</div><div style="text-align:right;"><div style="font-size:.72rem;color:var(--red-dk);font-weight:900;margin-bottom:2px;">🛡️ ${defPow}</div><button style="padding:3px 7px;font-size:.72rem;background:linear-gradient(180deg,var(--red),var(--red-dk));color:#fff;border:2px solid var(--brown-dk);border-radius:6px;cursor:pointer;font-weight:900;box-shadow:0 2px 0 var(--brown-dk);" onclick="startBattle('${opp.user}')">격돌</button></div>`;
+                    board.appendChild(card);
+                });
+            } catch (e) { board.innerHTML = '<p style="text-align:center;padding:10px;color:var(--red-dk);font-weight:bold;">⚠️ 불러오기 실패</p>'; }
+        }
+
+        function renderPodium(sorted) {
+            const pod = document.getElementById('podium-zone'); if (!pod) return;
+            const [p1, p2, p3] = sorted;
+            pod.innerHTML = `<div class="pod-slot r2"><span style="font-size:1rem;color:#cbd5e1;">🥈</span><span class="pod-name">${p2 ? p2.user : '공석'}</span><span class="pod-rp">${p2 ? p2.arenaPoints : 1000} RP</span></div><div class="pod-slot r1"><span style="font-size:1.3rem;color:#ffd700;">👑</span><span class="pod-name" style="color:#ffd700;">${p1 ? p1.user : '공석'}</span><span class="pod-rp">${p1 ? p1.arenaPoints : 1000} RP</span></div><div class="pod-slot r3"><span style="font-size:1rem;color:#cd7f32;">🥉</span><span class="pod-name">${p3 ? p3.user : '공석'}</span><span class="pod-rp">${p3 ? p3.arenaPoints : 1000} RP</span></div>`;
+        }
+
+        // ════════════════════════════════════════════════════════
+        //  DEFENSE LOG — Firebase
+        // ════════════════════════════════════════════════════════
+        async function renderDefenseHistory() {
+            const box = document.getElementById('def-log-box'); if (!box || !window._fbReady) return;
+            try {
+                const logs = await fbGet(`defense_logs/${G.user}`) || [];
+                const arr = Array.isArray(logs) ? logs : Object.values(logs);
+                if (!arr.length) { box.innerHTML = '<div style="color:var(--cream);text-align:center;padding-top:12px;font-weight:bold;">침공 기록이 없습니다.</div>'; return; }
+                box.innerHTML = '';
+                arr.slice(-6).reverse().forEach(log => {
+                    const line = document.createElement('div'); line.className = 'def-log-line';
+                    const c = log.result === '승리' ? '#6dd47e' : '#ff6b6b'; const sign = log.result === '승리' ? '+' : '-';
+                    const revBtn = log.result === '패배' ? `<button class="btn sm red" style="font-size:.56rem;padding:2px 5px;" onclick="triggerRevenge('${log.attacker}')">복수</button>` : '';
+                    line.innerHTML = `<span>⚔️ <b style="color:${c};">수비 ${log.result}</b> (${log.attacker})</span><span><span style="color:${c};margin-right:3px;font-weight:900;">${sign}${log.rp} RP</span>${revBtn}</span>`;
+                    box.appendChild(line);
+                });
+            } catch (e) { }
+        }
+
+        async function pushDefenseLog(targetUser, logEntry) {
+            if (!window._fbReady) return;
+            try {
+                const existing = await fbGet(`defense_logs/${targetUser}`) || [];
+                const arr = Array.isArray(existing) ? existing : Object.values(existing);
+                arr.push(logEntry);
+                if (arr.length > 20) arr.splice(0, arr.length - 20);
+                await fbSet(`defense_logs/${targetUser}`, arr);
+            } catch (e) { }
+        }
+
+        // ════════════════════════════════════════════════════════
+        //  GUILD — Firebase (실시간)
+        // ════════════════════════════════════════════════════════
+        function renderGuild() {
+            const box = document.getElementById('guild-content'); if (!box) return;
+            if (!G.guildName) {
+                box.innerHTML = `<div class="card" style="text-align:center;">
+<div class="card-title">🏰 길드 시스템</div>
+<div style="font-size:2rem;margin:8px 0;">🏰</div>
+<div style="font-weight:900;color:var(--brown-dk);margin-bottom:12px;">소속 길드가 없습니다!</div>
+<div style="display:flex;flex-direction:column;gap:7px;max-width:280px;margin:0 auto;">
+<input type="text" id="guild-name-inp" placeholder="길드 이름..." style="width:100%;padding:9px;border-radius:12px;border:4px solid var(--brown-dk);background:var(--cream);color:var(--brown-dk);font-size:.9rem;font-weight:900;text-align:center;">
+<button class="btn green" onclick="createGuild()">🏰 창설</button>
+<button class="btn purple" onclick="joinGuild()">🤝 가입</button>
+</div>
+<div id="guild-list-box" style="margin-top:12px;max-height:180px;overflow-y:auto;"></div>
+</div>`;
+                renderGuildList(); return;
+            }
+            // 실시간 길드 데이터 구독
+            const unsub = fbOnValue(`guilds/${G.guildName}`, (guildData) => {
+                if (!guildData) { G.guildName = ''; G.guildRole = ''; saveG(); renderGuild(); return; }
+                const members = Object.values(guildData.members || {}).sort((a, b) => (b.rp || 0) - (a.rp || 0));
+                const totalRP = members.reduce((s, m) => s + (m.rp || 0), 0);
+                box.innerHTML = `<div class="guild-card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;">
+<div><div style="font-size:1.1rem;font-weight:900;color:var(--brown-dk);">🏰 ${guildData.name}</div><div style="font-size:.77rem;color:var(--brown);">총 ${totalRP} RP | ${members.length}명</div></div>
+<button class="btn sm red" onclick="leaveGuild()">탈퇴</button>
+</div>
+<div class="guild-member-list">${members.map((m, i) => `<div class="guild-row"><span style="font-weight:900;color:var(--brown-dk);font-size:.83rem;">${i + 1}. ${m.user || '?'}${m.user === G.user ? ' (나)' : ''}</span><span style="font-size:.78rem;color:var(--gold-dk);font-weight:900;">${m.rp || 0} RP</span></div>`).join('')}</div>
+<div style="margin-top:9px;"><div class="card-title" style="margin-bottom:7px;">💬 길드 채팅</div>
+<div class="chat-box" id="chat-box"></div>
+<div style="display:flex;gap:5px;margin-top:5px;">
+<input type="text" id="chat-inp" placeholder="메시지..." style="flex:1;padding:7px;border-radius:10px;border:3px solid var(--brown-dk);background:var(--cream);font-size:.82rem;font-weight:900;">
+<button class="btn sm gold" onclick="sendChat()">전송</button>
+</div></div></div>`;
+                renderChat();
+            });
+            _fbUnsubscribers.push(unsub);
+            // 내 RP 갱신
+            fbUpdate(`guilds/${G.guildName}/members/${G.user}`, { user: G.user, rp: G.arenaPoints, role: G.guildRole || '길드원' });
+        }
+
+        async function renderGuildList() {
+            const box = document.getElementById('guild-list-box'); if (!box) return;
+            const guilds = await fbGet('guilds') || {};
+            const list = Object.values(guilds);
+            if (!list.length) { box.innerHTML = '<div style="color:var(--brown);font-size:.78rem;text-align:center;padding:8px;">아직 생성된 길드가 없습니다.</div>'; return; }
+            box.innerHTML = '<div style="font-size:.8rem;font-weight:900;color:var(--brown-dk);margin-bottom:5px;">📋 현재 길드:</div>' + list.map(g => `<div class="guild-row"><span style="font-weight:900;">🏰 ${g.name} (${Object.keys(g.members || {}).length}명)</span><button class="btn sm purple" onclick="joinGuildByName('${g.name}')">가입</button></div>`).join('');
+        }
+
+        async function createGuild() {
+            const name = document.getElementById('guild-name-inp')?.value.trim(); if (!name) return alert('길드 이름을 입력하세요!');
+            const existing = await fbGet(`guilds/${name}`); if (existing) return alert('이미 존재하는 이름입니다!');
+            await fbSet(`guilds/${name}`, { name, createdBy: G.user, members: { [G.user]: { user: G.user, rp: G.arenaPoints, role: '길드장' } } });
+            G.guildName = name; G.guildRole = '길드장'; alert(`🏰 [${name}] 창설 완료!`); snd('win'); saveG(); renderGuild();
+        }
+        async function joinGuild() { const name = document.getElementById('guild-name-inp')?.value.trim(); if (!name) return alert('길드 이름을 입력하세요!'); joinGuildByName(name); }
+        async function joinGuildByName(name) {
+            const g = await fbGet(`guilds/${name}`); if (!g) return alert('존재하지 않는 길드!');
+            if (g.members && g.members[G.user]) return alert('이미 가입됨!');
+            await fbUpdate(`guilds/${name}/members/${G.user}`, { user: G.user, rp: G.arenaPoints, role: '길드원' });
+            G.guildName = name; G.guildRole = '길드원'; alert(`🤝 [${name}] 가입!`); snd('win'); saveG(); renderGuild();
+        }
+        async function leaveGuild() {
+            if (!confirm(`[${G.guildName}] 탈퇴?`)) return;
+            await fbRemove(`guilds/${G.guildName}/members/${G.user}`);
+            G.guildName = ''; G.guildRole = ''; saveG(); renderGuild();
+        }
+        async function sendChat() {
+            const inp = document.getElementById('chat-inp'); if (!inp || !inp.value.trim()) return;
+            const msg = inp.value.trim(); inp.value = '';
+            await fbPush(`guild_chat/${G.guildName}`, { user: G.user, msg, time: new Date().toLocaleTimeString() });
+        }
+        function renderChat() {
+            const box = document.getElementById('chat-box'); if (!box) return;
+            const unsub = fbOnValue(`guild_chat/${G.guildName}`, (chatData) => {
+                if (!chatData) return;
+                const msgs = Object.values(chatData).slice(-50);
+                box.innerHTML = msgs.map(c => `<div><span style="color:var(--gold);font-weight:900;">[${c.user}]</span> ${c.msg} <span style="opacity:.5;font-size:.62rem;">${c.time}</span></div>`).join('');
+                box.scrollTop = box.scrollHeight;
+            });
+            _fbUnsubscribers.push(unsub);
+        }
+
+        // ════════════════════════════════════════════════════════
+        //  RAID — Firebase (공유 상태)
+        // ════════════════════════════════════════════════════════
+        const RAID_BOSSES = [
+            { id: 'r1', name: '🦕 거대 공룡 지우개', hp: 50000, maxHP: 50000, reward: { coin: 1000, dia: 30 }, img: '🦕', diff: '보통' },
+            { id: 'r2', name: '🐉 드래곤 지우개왕', hp: 150000, maxHP: 150000, reward: { coin: 3000, dia: 80 }, img: '🐉', diff: '어려움' },
+            { id: 'r3', name: '👹 악마 지우개 군주', hp: 500000, maxHP: 500000, reward: { coin: 10000, dia: 300 }, img: '👹', diff: '전설' },
+        ];
+        async function getRaidBoss() {
+            const r = await fbGet('raid/boss');
+            return r || { ...RAID_BOSSES[0] };
+        }
+        async function saveRaidBoss(b) { await fbSet('raid/boss', b); }
+
+        async function renderRaid() {
+            const box = document.getElementById('raid-content'); if (!box) return;
+            box.innerHTML = '<div style="text-align:center;padding:20px;color:var(--cream);">🔄 로딩 중...</div>';
+            const boss = await getRaidBoss();
+            const contribs = await fbGet('raid/contributions') || {};
+            const top = Object.entries(contribs).sort((a, b) => b[1] - a[1]).slice(0, 10);
+            const hpPct = Math.max(0, Math.floor(boss.hp / boss.maxHP * 100));
+            box.innerHTML = `<div class="raid-boss-card">
+<div class="card-title" style="background:linear-gradient(180deg,var(--red-dk),#7b241c);color:var(--cream);margin-bottom:9px;">👹 서버 공동 레이드</div>
+<div style="font-size:3rem;margin:8px 0;">${boss.img}</div>
+<div style="font-size:1rem;font-weight:900;margin-bottom:4px;">${boss.name}</div>
+<div style="font-size:.77rem;color:var(--pink);margin-bottom:3px;">[${boss.diff}]</div>
+<div class="raid-hp-wrap"><div class="raid-hp-fill" style="width:${hpPct}%"></div></div>
+<div style="font-size:.82rem;font-weight:900;color:var(--gold);">${boss.hp.toLocaleString()} / ${boss.maxHP.toLocaleString()} HP (${hpPct}%)</div>
+<div style="margin-top:9px;display:flex;gap:7px;justify-content:center;">
+<button class="btn red" style="max-width:145px;" onclick="attackRaid(1)">⚔️ 단일<br><span style="font-size:.68rem;">(🪙50)</span></button>
+<button class="btn purple" style="max-width:145px;" onclick="attackRaid(5)">💥 연속<br><span style="font-size:.68rem;">(🪙200)</span></button>
+</div>
+<div style="margin-top:7px;font-size:.78rem;color:var(--pink);">내 기여도: <span style="color:var(--gold);font-weight:900;">${(contribs[G.user] || 0).toLocaleString()} 데미지</span></div>
+<div style="margin-top:7px;"><div style="font-size:.8rem;font-weight:900;color:var(--gold);margin-bottom:4px;">🏆 기여도 랭킹</div>
+<div class="raid-contribs">${top.map(([u, d], i) => `<div class="raid-cr"><span>${i + 1}. ${u}</span><span style="color:var(--gold);font-weight:900;">${d.toLocaleString()}</span></div>`).join('') || '<div style="text-align:center;opacity:.7;font-size:.78rem;">아직 없습니다</div>'}</div></div>
+<div style="margin-top:7px;font-size:.73rem;color:var(--pink);">🎁 클리어 보상: 🪙${boss.reward.coin} 💎${boss.reward.dia}</div>
+${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,var(--gold),var(--gold-dk));padding:9px;border-radius:10px;font-weight:900;color:var(--brown-dk);">🎉 레이드 클리어!</div><button class="btn green" style="margin-top:7px;" onclick="claimRaidReward()">🎁 보상 수령</button>` : ''}
+</div>`;
+        }
+
+        async function attackRaid(mult) {
+            const cost = mult === 1 ? 50 : 200;
+            if (G.coins < cost) return alert(`🪙 부족 (필요: ${cost})`);
+            if (!G.attackTeam[0]) return alert('공격 덱을 먼저 편성하세요!');
+            const boss = await getRaidBoss(); if (boss.hp <= 0) return alert('보스가 이미 처치됐습니다!');
+            G.coins -= cost;
+            let pow = 0; G.attackTeam.forEach(u => { if (u) pow += calcPow(u.tier, u.stars || 1); });
+            const dmg = Math.floor(pow * (0.5 + Math.random() * 0.5) * mult * 10);
+            boss.hp = Math.max(0, boss.hp - dmg);
+            await saveRaidBoss(boss);
+            const contribs = await fbGet('raid/contributions') || {};
+            contribs[G.user] = (contribs[G.user] || 0) + dmg;
+            await fbSet('raid/contributions', contribs);
+            particles(); snd('win');
+            alert(`💥 레이드 공격!\n데미지: ${dmg.toLocaleString()}\n잔여 HP: ${boss.hp.toLocaleString()}`);
+            addPassXP(10 * mult); progressQuest('raid', mult); checkAchs(); updateUI(); renderRaid();
+        }
+
+        async function claimRaidReward() {
+            const boss = await getRaidBoss(); if (boss.hp > 0) return;
+            const contribs = await fbGet('raid/contributions') || {};
+            if (!(contribs[G.user] > 0)) return alert('기여도가 없습니다!');
+            const pct = contribs[G.user] / (boss.maxHP || 1);
+            const coinR = Math.max(100, Math.floor(boss.reward.coin * Math.min(1, pct * 10)));
+            const diaR = Math.max(5, Math.floor(boss.reward.dia * Math.min(1, pct * 10)));
+            G.coins += coinR; G.diamonds += diaR;
+            alert(`🎉 레이드 보상!\n🪙${coinR} 💎${diaR}`);
+            const curIdx = RAID_BOSSES.findIndex(b => b.id === boss.id);
+            await saveRaidBoss({ ...RAID_BOSSES[(curIdx + 1) % RAID_BOSSES.length] });
+            delete contribs[G.user]; await fbSet('raid/contributions', contribs);
+            particles(); snd('win'); updateUI(); renderRaid();
+        }
+
+        // ════════════════════════════════════════════════════════
+        //  BATTLE ENGINE — Firebase 버전
+        // ════════════════════════════════════════════════════════
+        async function startBattle(targetUser) {
+            if (G.arenaPullsLeft <= 0) return alert('🎟️ 대전권이 없습니다!');
+            if (!G.attackTeam[0] || !G.attackTeam[1] || !G.attackTeam[2]) return alert('공격 덱 3칸을 모두 채워주세요!');
+            const tData = await fbGet(`arena/${targetUser}`);
+            if (!tData) return alert('상대 데이터가 없습니다.');
+            G.arenaPullsLeft--;
+            runBattleUI(targetUser, tData, false);
+        }
+
+        function runBattleUI(targetUser, tData, isDungeon, floorNum) {
+            const flat = flatPool();
+            const overlay = document.getElementById('battle-overlay');
+            const logEl = document.getElementById('battle-log');
+            const resEl = document.getElementById('battle-result');
+            overlay.style.display = 'flex'; logEl.innerText = ''; resEl.innerText = '';
+            const isRevenge = (revengeTarget === targetUser);
+            document.getElementById('battle-title').innerText = isDungeon ? `${tData.user}` : (isRevenge ? `🔥 복수혈전: ${G.user} VS ${targetUser}` : `⚔️ ${G.user} VS ${targetUser}`);
+            const enemyTeam = tData.defenseTeam || [null, null, null];
+            const aHP = [0, 0, 0], eHP = [0, 0, 0], aMax = [0, 0, 0], eMax = [0, 0, 0];
+            const aAlive = [true, true, true], eAlive = [true, true, true];
+            for (let i = 0; i < 3; i++) {
+                const a = G.attackTeam[i]; const e = enemyTeam[i];
+                const aM = a ? flat.find(f => f.id === a.imgId) : null; const eM = e ? flat.find(f => f.id === e.imgId) : null;
+                aHP[i] = aMax[i] = a ? calcPow(a.tier, a.stars || 1) * 3 : 1;
+                eHP[i] = eMax[i] = e ? calcPow(e.tier, e.stars || 1) * 3 : 1;
+                document.getElementById('ai' + i).src = aM ? aM.src : ''; document.getElementById('an' + i).innerText = aM ? aM.name.slice(0, 8) : '공석';
+                document.getElementById('as' + i).innerText = (a?.skills || []).map(id => SKILL_POOL.find(s => s.id === id)?.name || '').join(' ');
+                document.getElementById('ei' + i).src = eM ? eM.src : ''; document.getElementById('en' + i).innerText = isDungeon ? `👹${(eM?.name || '없음').slice(0, 6)}` : (eM ? eM.name.slice(0, 8) : '공석');
+                document.getElementById('es' + i).innerText = (e?.skills || []).map(id => SKILL_POOL.find(s => s.id === id)?.name || '').join(' ');
+                updHP(i, 'a', aHP[i], aMax[i]); updHP(i, 'e', eHP[i], eMax[i]);
+                document.getElementById('au' + i).classList.remove('unit-dead'); document.getElementById('eu' + i).classList.remove('unit-dead');
+            }
+            function updHP(idx, side, cur, max) { const pct = Math.max(0, Math.floor(cur / max * 100)); document.getElementById((side === 'a' ? 'ahb' : 'ehb') + idx).style.width = pct + '%'; document.getElementById((side === 'a' ? 'aht' : 'eht') + idx).innerText = Math.max(0, cur); }
+            function spawnDmg(idx, side, dmg) {
+                const stage = document.getElementById('battle-stage');
+                const unit = document.getElementById((side === 'a' ? 'au' : 'eu') + idx);
+                const rect = unit.getBoundingClientRect(); const sr = stage.getBoundingClientRect();
+                const el = document.createElement('div'); el.className = 'dmg-num'; el.innerText = '-' + dmg;
+                el.style.cssText = `left:${rect.left - sr.left + 16}px;top:${rect.top - sr.top}px;`;
+                stage.appendChild(el); setTimeout(() => el.remove(), 950);
+            }
+            function addLog(t) { logEl.innerText += t + '\n'; logEl.scrollTop = logEl.scrollHeight; }
+            let tick = 0;
+            function battleTick() {
+                if (tick >= 30) return endBattle();
+                for (let i = 0; i < 3; i++) {
+                    if (!aAlive[i] || !eAlive[i]) continue;
+                    const a = G.attackTeam[i]; const e = enemyTeam[i];
+                    const aS = a?.skills || []; const eS = e?.skills || [];
+                    let aDmg = Math.floor(calcPow(a?.tier || 'Trash', a?.stars || 1) * (0.2 + Math.random() * .15));
+                    let eDmg = Math.floor(calcPow(e?.tier || 'Trash', e?.stars || 1) * (0.2 + Math.random() * .15));
+                    if (aS.includes('first')) aDmg = Math.floor(aDmg * 1.2); if (eS.includes('first')) eDmg = Math.floor(eDmg * 1.2);
+                    if (aS.includes('crit') && Math.random() < .3) { aDmg *= 2; addLog(`🎯 아군${i + 1} 크리!`); }
+                    if (eS.includes('crit') && Math.random() < .3) { eDmg *= 2; addLog(`💥 적${i + 1} 크리!`); }
+                    if (aS.includes('burn')) aDmg += 15; if (eS.includes('burn')) eDmg += 15;
+                    if (aS.includes('shield')) eDmg = Math.floor(eDmg * .7); if (eS.includes('shield')) aDmg = Math.floor(aDmg * .7);
+                    if (eS.includes('freeze') && Math.random() < .3) { aDmg = 0; addLog(`❄️ 아군${i + 1} 빙결!`); }
+                    if (aS.includes('freeze') && Math.random() < .3) { eDmg = 0; addLog(`❄️ 적${i + 1} 빙결!`); }
+                    if (aS.includes('drain')) aHP[i] = Math.min(aMax[i], aHP[i] + Math.floor(aDmg * .25));
+                    eHP[i] -= aDmg; aHP[i] -= eDmg;
+                    const auEl = document.getElementById('au' + i); const euEl = document.getElementById('eu' + i);
+                    auEl.classList.add('unit-atk'); euEl.classList.add('unit-hit');
+                    setTimeout(() => { auEl.classList.remove('unit-atk'); euEl.classList.remove('unit-hit'); }, 350);
+                    spawnDmg(i, 'a', aDmg); spawnDmg(i, 'e', eDmg);
+                    updHP(i, 'a', aHP[i], aMax[i]); updHP(i, 'e', eHP[i], eMax[i]);
+                    if (aHP[i] <= 0) { aAlive[i] = false; document.getElementById('au' + i).classList.add('unit-dead'); addLog(`💀 아군${i + 1} 전사!`); }
+                    if (eHP[i] <= 0) { eAlive[i] = false; document.getElementById('eu' + i).classList.add('unit-dead'); addLog(`💀 적${i + 1} 전사!`); }
+                }
+                tick++;
+                if (aAlive.every(x => !x) || eAlive.every(x => !x)) return endBattle();
+                setTimeout(battleTick, 700);
+            }
+            async function endBattle() {
+                const myD = aAlive.filter(x => !x).length, enD = eAlive.filter(x => !x).length;
+                const won = enD > myD || (enD === myD && aHP.reduce((a, b) => a + b, 0) >= eHP.reduce((a, b) => a + b, 0));
+                if (isDungeon) { grantDungeonReward(floorNum, won, resEl); return; }
+                let ptVar = Math.floor(Math.random() * 11) + 15; if (isRevenge) ptVar *= 2;
+                if (won) {
+                    G.arenaPoints += ptVar; G.coins += 80; G.diamonds += 15;
+                    resEl.innerText = `🏆 승리! (+80🪙 +15💎 +${ptVar} RP)`; resEl.style.color = '#ffd700';
+                    // Firebase에 상대 RP 갱신
+                    await fbUpdate(`arena/${targetUser}`, { arenaPoints: Math.max(500, (tData.arenaPoints || 1000) - ptVar) });
+                    await pushDefenseLog(targetUser, { attacker: G.user, result: '패배', rp: ptVar });
+                    G.achStats.battleWins = (G.achStats.battleWins || 0) + 1;
+                    addPassXP(20); progressQuest('win', 1); checkAchs(); snd('win');
+                } else {
+                    G.arenaPoints = Math.max(500, G.arenaPoints - ptVar); G.coins += 20;
+                    resEl.innerText = `☠️ 패배.. (+20🪙 -${ptVar} RP)`; resEl.style.color = '#ff4757';
+                    await fbUpdate(`arena/${targetUser}`, { arenaPoints: (tData.arenaPoints || 1000) + Math.floor(ptVar * .5) });
+                    await pushDefenseLog(targetUser, { attacker: G.user, result: '승리', rp: Math.floor(ptVar * .5) });
+                    snd('lose');
+                }
+                revengeTarget = null; updateUI(); renderOpponentBoard();
+            }
+            setTimeout(battleTick, 500);
+        }
+        function triggerRevenge(atk) { revengeTarget = atk; alert(`🔥 복수혈전! [${atk}] 승리 시 RP 2배!`); startBattle(atk); }
+        function closeBattle() { document.getElementById('battle-overlay').style.display = 'none'; }
+        function buyArenaTickets() { if (G.coins < 50) return alert('코인 부족'); G.coins -= 50; G.arenaPullsLeft = 10; updateUI(); }
 
         // ════════════════════════════════════════════════════════
         //  SOUND
@@ -3707,18 +3571,26 @@
         async function doLogin() {
             const id = document.getElementById('uid-input').value.trim();
             if (!id) return alert('아이디를 입력하세요!');
-            G.user = id; loadG(id);
+            if (!window._fbReady) return alert('Firebase 연결 중입니다. 잠시 후 다시 시도해주세요!');
+            G.user = id;
+            await loadG(id);
             await loadAllImgs();
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('app-shell').style.display = 'flex';
             document.getElementById('sound-btn').style.display = 'flex';
             document.getElementById('sound-btn').innerText = G.soundOn ? '🔊' : '🔇';
+            const fbStat = document.getElementById('fb-status');
+            fbStat.style.display = 'block'; fbStat.className = 'online'; fbStat.innerText = '🔥 실시간';
             refreshDailyQuests();
-            saveArenaProfile();
+            await saveArenaProfile();
             updateUI();
             switchSide('arena');
         }
-        function doLogout() { saveG(); G.user = ''; location.reload(); }
+        function doLogout() {
+            _fbUnsubscribers.forEach(fn => { try { fn(); } catch (e) { } });
+            _fbUnsubscribers = [];
+            saveG(); G.user = ''; location.reload();
+        }
         function triggerCheat() { if (!G.user) return; G.coins += 1000; G.diamonds += 100; snd('coin'); alert('🪄 군주 보조금!'); updateUI(); }
 
         // ════════════════════════════════════════════════════════
@@ -3759,11 +3631,7 @@
             const ap = document.getElementById('atk-pow'); if (ap) ap.innerText = '전투력: ' + atk;
             const dp = document.getElementById('def-pow'); if (dp) dp.innerText = '전투력: ' + def;
             const platform = document.getElementById('arena-platform');
-            if (platform) {
-                let cnt = 0, html = '';
-                G.attackTeam.forEach(s => { if (s) { const m = flat.find(f => f.id === s.imgId); if (m) { cnt++; html += `<img class="mini-av" src="${m.src}" title="${m.name}">`; } } });
-                platform.innerHTML = cnt ? html : '<div style="font-size:.72rem;color:var(--cream);padding:10px;font-weight:bold;">⚔️ 공격 편대가 비어있습니다.</div>';
-            }
+            if (platform) { let cnt = 0, html = ''; G.attackTeam.forEach(s => { if (s) { const m = flat.find(f => f.id === s.imgId); if (m) { cnt++; html += `<img class="mini-av" src="${m.src}" title="${m.name}">`; } } }); platform.innerHTML = cnt ? html : '<div style="font-size:.72rem;color:var(--cream);padding:10px;font-weight:bold;">⚔️ 공격 편대가 비어있습니다.</div>'; }
             document.getElementById('arena-tickets').innerText = G.arenaPullsLeft;
             renderDefenseHistory();
             updateFreeCount();
@@ -3778,8 +3646,7 @@
             currentSideTab = tab;
             document.querySelectorAll('.sb-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
             document.querySelectorAll('.content-area .screen').forEach(s => s.classList.remove('active'));
-            const sc = document.getElementById('screen-' + tab);
-            if (sc) sc.classList.add('active');
+            const sc = document.getElementById('screen-' + tab); if (sc) sc.classList.add('active');
             if (tab === 'collection') renderCollection();
             if (tab === 'fusion') renderFusion();
             if (tab === 'codex') renderCodex();
@@ -3794,7 +3661,6 @@
             if (tab === 'raid') renderRaid();
             if (tab === 'achievement') renderAch();
         }
-
         function openBottomModal(tab) {
             const m = document.getElementById('bottom-modal');
             const title = document.getElementById('bottom-modal-title');
@@ -3806,24 +3672,15 @@
         function closeBottomModal() { document.getElementById('bottom-modal').style.display = 'none'; }
 
         // ════════════════════════════════════════════════════════
-        //  ADMIN
+        //  ADMIN (IndexedDB 그대로)
         // ════════════════════════════════════════════════════════
         function openAdminPW() { document.getElementById('pw-modal').style.display = 'flex'; document.getElementById('pw-input').value = ''; }
         function closePWModal() { document.getElementById('pw-modal').style.display = 'none'; }
-        function checkAdminPW() {
-            if (document.getElementById('pw-input').value !== '1234') { alert('암호가 틀렸습니다!'); return; }
-            closePWModal(); openAdminModal();
-        }
-        async function openAdminModal() {
-            await loadAllImgs();
-            document.getElementById('admin-modal').style.display = 'flex';
-            renderAdminTiers();
-        }
+        function checkAdminPW() { if (document.getElementById('pw-input').value !== '1234') { alert('암호가 틀렸습니다!'); return; } closePWModal(); openAdminModal(); }
+        async function openAdminModal() { await loadAllImgs(); document.getElementById('admin-modal').style.display = 'flex'; renderAdminTiers(); }
         function closeAdminModal() { document.getElementById('admin-modal').style.display = 'none'; }
-
         const ALL_ADMIN_TIERS = [...TIER_ORDER, 'SECRET_COLOR', 'SECRET_NOT'];
         const TIER_LABELS = { Trash: '🗑️ Trash', Common: '📦 Common', Uncommon: '🟢 Uncommon', Epic: '🟣 Epic', Mythic: '🔵 Mythic', Legendary: '🟡 Legendary', Beast: '🟠 Beast', Celestial: '⚪ Celestial', Ultra: '💗 Ultra', Hyper: '🔴 Hyper', Infinity: '🌸 Infinity', '???': '❓ ???', SECRET_COLOR: '🌈 COLOR (시크릿)', SECRET_NOT: '❌ NOT (시크릿)' };
-
         function renderAdminTiers() {
             const box = document.getElementById('admin-tiers'); box.innerHTML = '';
             ALL_ADMIN_TIERS.forEach(tier => {
@@ -3835,7 +3692,6 @@
                 renderAdminPrev(tier);
             });
         }
-
         async function uploadImg(event, tier) {
             const files = event.target.files; if (!files.length) return;
             for (let i = 0; i < files.length; i++) {
@@ -3846,31 +3702,22 @@
                         const obj = { id, src: e.target.result, name: '지우개_' + Math.floor(Math.random() * 900 + 100) };
                         if (!imgPool[tier]) imgPool[tier] = [];
                         imgPool[tier].push(obj);
-                        await saveImgToDB(tier, obj);
-                        res();
+                        await saveImgToDB(tier, obj); res();
                     };
                     r.readAsDataURL(files[i]);
                 });
             }
             renderAdminPrev(tier);
         }
-
         function renderAdminPrev(tier) {
             const row = document.getElementById('adm-prev-' + tier); if (!row) return; row.innerHTML = '';
             (imgPool[tier] || []).forEach((item, idx) => {
                 const box = document.createElement('div'); box.className = 'admin-item';
                 const img = document.createElement('img'); img.src = item.src;
                 const inp = document.createElement('input'); inp.type = 'text'; inp.value = item.name || '';
-                inp.oninput = async e => {
-                    imgPool[tier][idx].name = e.target.value;
-                    await saveImgToDB(tier, imgPool[tier][idx]);
-                };
+                inp.oninput = async e => { imgPool[tier][idx].name = e.target.value; await saveImgToDB(tier, imgPool[tier][idx]); };
                 const del = document.createElement('button'); del.className = 'admin-del'; del.innerText = 'X';
-                del.onclick = async () => {
-                    await deleteImgFromDB(item.id);
-                    imgPool[tier].splice(idx, 1);
-                    renderAdminPrev(tier);
-                };
+                del.onclick = async () => { await deleteImgFromDB(item.id); imgPool[tier].splice(idx, 1); renderAdminPrev(tier); };
                 box.appendChild(img); box.appendChild(inp); box.appendChild(del); row.appendChild(box);
             });
         }
@@ -3913,7 +3760,6 @@
                 grid.appendChild(box);
             });
         }
-
         function showItemDetail(eraser) {
             _detailEraser = eraser;
             const flat = flatPool(); const m = flat.find(f => f.id === eraser.imgId);
@@ -3934,11 +3780,7 @@
             const flat = flatPool(); const m = flat.find(f => f.id === eraser.imgId);
             if (!confirm(`[${eraser.tier}] ${m ? m.name : eraser.name}을 🪙${SELL_PRICES[eraser.tier] || 10}에 파시겠습니까?`)) return;
             const idx = G.inventory.findIndex(i => i.id === eraser.id);
-            if (idx > -1) {
-                G.inventory.splice(idx, 1); G.coins += SELL_PRICES[eraser.tier] || 10;
-                for (let j = 0; j < 3; j++) { if (G.attackTeam[j]?.id === eraser.id) G.attackTeam[j] = null; if (G.defenseTeam[j]?.id === eraser.id) G.defenseTeam[j] = null; }
-                snd('coin'); updateUI(); renderCollection(); closeItemDetail();
-            }
+            if (idx > -1) { G.inventory.splice(idx, 1); G.coins += SELL_PRICES[eraser.tier] || 10; for (let j = 0; j < 3; j++) { if (G.attackTeam[j]?.id === eraser.id) G.attackTeam[j] = null; if (G.defenseTeam[j]?.id === eraser.id) G.defenseTeam[j] = null; } snd('coin'); updateUI(); renderCollection(); closeItemDetail(); }
         }
 
         // ════════════════════════════════════════════════════════
@@ -3968,10 +3810,7 @@
             if (cs < 3) ns = cs + 1; else { nt = TIER_ORDER[ci + 1]; ns = 1; }
             const np = calcPow(nt, ns);
             if (!confirm(`⚗️ 합성?\n${srcImg.name} [${src.tier} ${starStr(cs)}] ×3\n→ [${nt} ${starStr(ns)}] 전투력 ${np}`)) return;
-            items.forEach(item => {
-                const idx = G.inventory.findIndex(i => i.id === item.id);
-                if (idx > -1) { for (let j = 0; j < 3; j++) { if (G.attackTeam[j]?.id === item.id) G.attackTeam[j] = null; if (G.defenseTeam[j]?.id === item.id) G.defenseTeam[j] = null; } G.inventory.splice(idx, 1); }
-            });
+            items.forEach(item => { const idx = G.inventory.findIndex(i => i.id === item.id); if (idx > -1) { for (let j = 0; j < 3; j++) { if (G.attackTeam[j]?.id === item.id) G.attackTeam[j] = null; if (G.defenseTeam[j]?.id === item.id) G.defenseTeam[j] = null; } G.inventory.splice(idx, 1); } });
             const newCard = { id: uid(), imgId: srcImg.id, tier: nt, stars: ns, power: np, name: srcImg.name, skills: rndSkills(nt) };
             G.inventory.push(newCard);
             alert(`✨ 합성 성공!\n[${nt} ${starStr(ns)}] ${srcImg.name}\n⚔️ ${np}`);
@@ -4089,127 +3928,6 @@
         }
 
         // ════════════════════════════════════════════════════════
-        //  GUILD
-        // ════════════════════════════════════════════════════════
-        function renderGuild() {
-            const box = document.getElementById('guild-content'); if (!box) return;
-            const key = `Guild_Data_${G.guildName}`;
-            const myGuild = G.guildName ? JSON.parse(localStorage.getItem(key) || 'null') : null;
-            if (!G.guildName || !myGuild) {
-                box.innerHTML = `<div class="card" style="text-align:center;">
-<div class="card-title">🏰 길드 시스템</div>
-<div style="font-size:2rem;margin:8px 0;">🏰</div>
-<div style="font-weight:900;color:var(--brown-dk);margin-bottom:12px;">소속 길드가 없습니다!</div>
-<div style="display:flex;flex-direction:column;gap:7px;max-width:280px;margin:0 auto;">
-<input type="text" id="guild-name-inp" placeholder="길드 이름..." style="width:100%;padding:9px;border-radius:12px;border:4px solid var(--brown-dk);background:var(--cream);color:var(--brown-dk);font-size:.9rem;font-weight:900;text-align:center;">
-<button class="btn green" onclick="createGuild()">🏰 창설</button>
-<button class="btn purple" onclick="joinGuild()">🤝 가입</button>
-</div>
-<div id="guild-list-box" style="margin-top:12px;max-height:180px;overflow-y:auto;"></div>
-</div>`;
-                renderGuildList(); return;
-            }
-            let members = myGuild.members || [];
-            const mi = members.findIndex(m => m.user === G.user);
-            if (mi > -1) members[mi].rp = G.arenaPoints; else members.push({ user: G.user, rp: G.arenaPoints, role: G.guildRole || '길드원' });
-            myGuild.members = members; localStorage.setItem(key, JSON.stringify(myGuild));
-            members.sort((a, b) => (b.rp || 0) - (a.rp || 0));
-            const totalRP = members.reduce((s, m) => s + (m.rp || 0), 0);
-            box.innerHTML = `<div class="guild-card">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;">
-<div><div style="font-size:1.1rem;font-weight:900;color:var(--brown-dk);">🏰 ${myGuild.name}</div><div style="font-size:.77rem;color:var(--brown);">총 ${totalRP} RP | ${members.length}명</div></div>
-<button class="btn sm red" onclick="leaveGuild()">탈퇴</button>
-</div>
-<div class="guild-member-list">${members.map((m, i) => `<div class="guild-row"><span style="font-weight:900;color:var(--brown-dk);font-size:.83rem;">${i + 1}. ${m.user || '?'}${m.user === G.user ? ' (나)' : ''}</span><span style="font-size:.78rem;color:var(--gold-dk);font-weight:900;">${m.rp || 0} RP</span></div>`).join('')}</div>
-<div style="margin-top:9px;"><div class="card-title" style="margin-bottom:7px;">💬 길드 채팅</div>
-<div class="chat-box" id="chat-box"></div>
-<div style="display:flex;gap:5px;margin-top:5px;">
-<input type="text" id="chat-inp" placeholder="메시지..." style="flex:1;padding:7px;border-radius:10px;border:3px solid var(--brown-dk);background:var(--cream);font-size:.82rem;font-weight:900;">
-<button class="btn sm gold" onclick="sendChat()">전송</button>
-</div></div></div>`;
-            renderChat();
-            if (window._chatPollId) clearInterval(window._chatPollId);
-            window._chatPollId = setInterval(() => { if (currentSideTab === 'guild') renderChat(); else clearInterval(window._chatPollId); }, 3000);
-        }
-        function renderGuildList() {
-            const box = document.getElementById('guild-list-box'); if (!box) return;
-            const guilds = [];
-            for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith('Guild_Data_')) { try { const g = JSON.parse(localStorage.getItem(k)); if (g) guilds.push(g); } catch (e) { } } }
-            if (!guilds.length) { box.innerHTML = '<div style="color:var(--brown);font-size:.78rem;text-align:center;padding:8px;">아직 생성된 길드가 없습니다.</div>'; return; }
-            box.innerHTML = '<div style="font-size:.8rem;font-weight:900;color:var(--brown-dk);margin-bottom:5px;">📋 현재 길드:</div>' + guilds.map(g => `<div class="guild-row"><span style="font-weight:900;">🏰 ${g.name} (${(g.members || []).length}명)</span><button class="btn sm purple" onclick="joinGuildByName('${g.name}')">가입</button></div>`).join('');
-        }
-        function createGuild() { const name = document.getElementById('guild-name-inp')?.value.trim(); if (!name) return alert('길드 이름을 입력하세요!'); if (localStorage.getItem(`Guild_Data_${name}`)) return alert('이미 존재하는 이름입니다!'); const g = { name, createdBy: G.user, members: [{ user: G.user, rp: G.arenaPoints, role: '길드장' }], chat: [] }; localStorage.setItem(`Guild_Data_${name}`, JSON.stringify(g)); G.guildName = name; G.guildRole = '길드장'; alert(`🏰 [${name}] 창설 완료!`); snd('win'); updateUI(); renderGuild(); }
-        function joinGuild() { const name = document.getElementById('guild-name-inp')?.value.trim(); if (!name) return alert('길드 이름을 입력하세요!'); joinGuildByName(name); }
-        function joinGuildByName(name) { const raw = localStorage.getItem(`Guild_Data_${name}`); if (!raw) return alert('존재하지 않는 길드!'); const g = JSON.parse(raw); if (g.members.find(m => m.user === G.user)) return alert('이미 가입됨!'); g.members.push({ user: G.user, rp: G.arenaPoints, role: '길드원' }); localStorage.setItem(`Guild_Data_${name}`, JSON.stringify(g)); G.guildName = name; G.guildRole = '길드원'; alert(`🤝 [${name}] 가입!`); snd('win'); updateUI(); renderGuild(); }
-        function leaveGuild() { if (!confirm(`[${G.guildName}] 탈퇴?`)) return; const raw = localStorage.getItem(`Guild_Data_${G.guildName}`); if (raw) { const g = JSON.parse(raw); g.members = g.members.filter(m => m.user !== G.user); localStorage.setItem(`Guild_Data_${G.guildName}`, JSON.stringify(g)); } G.guildName = ''; G.guildRole = ''; updateUI(); renderGuild(); }
-        function sendChat() { const inp = document.getElementById('chat-inp'); if (!inp || !inp.value.trim()) return; const msg = inp.value.trim(); inp.value = ''; const raw = localStorage.getItem(`Guild_Data_${G.guildName}`); if (!raw) return; const g = JSON.parse(raw); if (!g.chat) g.chat = []; g.chat.push({ user: G.user, msg, time: new Date().toLocaleTimeString() }); if (g.chat.length > 50) g.chat = g.chat.slice(-50); localStorage.setItem(`Guild_Data_${G.guildName}`, JSON.stringify(g)); renderChat(); }
-        function renderChat() { const box = document.getElementById('chat-box'); if (!box) return; const raw = localStorage.getItem(`Guild_Data_${G.guildName}`); if (!raw) return; const g = JSON.parse(raw); box.innerHTML = (g.chat || []).map(c => `<div><span style="color:var(--gold);font-weight:900;">[${c.user}]</span> ${c.msg} <span style="opacity:.5;font-size:.62rem;">${c.time}</span></div>`).join(''); box.scrollTop = box.scrollHeight; }
-
-        // ════════════════════════════════════════════════════════
-        //  RAID
-        // ════════════════════════════════════════════════════════
-        const RAID_BOSSES = [
-            { id: 'r1', name: '🦕 거대 공룡 지우개', hp: 50000, maxHP: 50000, reward: { coin: 1000, dia: 30 }, img: '🦕', diff: '보통' },
-            { id: 'r2', name: '🐉 드래곤 지우개왕', hp: 150000, maxHP: 150000, reward: { coin: 3000, dia: 80 }, img: '🐉', diff: '어려움' },
-            { id: 'r3', name: '👹 악마 지우개 군주', hp: 500000, maxHP: 500000, reward: { coin: 10000, dia: 300 }, img: '👹', diff: '전설' },
-        ];
-        function getRaidBoss() { const r = localStorage.getItem('Raid_Boss_State'); if (r) { try { return JSON.parse(r); } catch (e) { } } return { ...RAID_BOSSES[0] }; }
-        function saveRaidBoss(b) { localStorage.setItem('Raid_Boss_State', JSON.stringify(b)); }
-        function renderRaid() {
-            const box = document.getElementById('raid-content'); if (!box) return;
-            const boss = getRaidBoss();
-            const contribs = JSON.parse(localStorage.getItem('Raid_Contributions') || '{}');
-            const top = Object.entries(contribs).sort((a, b) => b[1] - a[1]).slice(0, 10);
-            const hpPct = Math.max(0, Math.floor(boss.hp / boss.maxHP * 100));
-            box.innerHTML = `<div class="raid-boss-card">
-<div class="card-title" style="background:linear-gradient(180deg,var(--red-dk),#7b241c);color:var(--cream);margin-bottom:9px;">👹 서버 공동 레이드</div>
-<div style="font-size:3rem;margin:8px 0;">${boss.img}</div>
-<div style="font-size:1rem;font-weight:900;margin-bottom:4px;">${boss.name}</div>
-<div style="font-size:.77rem;color:var(--pink);margin-bottom:3px;">[${boss.diff}]</div>
-<div class="raid-hp-wrap"><div class="raid-hp-fill" style="width:${hpPct}%"></div></div>
-<div style="font-size:.82rem;font-weight:900;color:var(--gold);">${boss.hp.toLocaleString()} / ${boss.maxHP.toLocaleString()} HP (${hpPct}%)</div>
-<div style="margin-top:9px;display:flex;gap:7px;justify-content:center;">
-<button class="btn red" style="max-width:145px;" onclick="attackRaid(1)">⚔️ 단일<br><span style="font-size:.68rem;">(🪙50)</span></button>
-<button class="btn purple" style="max-width:145px;" onclick="attackRaid(5)">💥 연속<br><span style="font-size:.68rem;">(🪙200)</span></button>
-</div>
-<div style="margin-top:7px;font-size:.78rem;color:var(--pink);">내 기여도: <span style="color:var(--gold);font-weight:900;">${(contribs[G.user] || 0).toLocaleString()} 데미지</span></div>
-<div style="margin-top:7px;"><div style="font-size:.8rem;font-weight:900;color:var(--gold);margin-bottom:4px;">🏆 기여도 랭킹</div>
-<div class="raid-contribs">${top.map(([u, d], i) => `<div class="raid-cr"><span>${i + 1}. ${u}</span><span style="color:var(--gold);font-weight:900;">${d.toLocaleString()}</span></div>`).join('') || '<div style="text-align:center;opacity:.7;font-size:.78rem;">아직 없습니다</div>'}</div></div>
-<div style="margin-top:7px;font-size:.73rem;color:var(--pink);">🎁 클리어 보상: 🪙${boss.reward.coin} 💎${boss.reward.dia}</div>
-${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,var(--gold),var(--gold-dk));padding:9px;border-radius:10px;font-weight:900;color:var(--brown-dk);">🎉 레이드 클리어!</div><button class="btn green" style="margin-top:7px;" onclick="claimRaidReward()">🎁 보상 수령</button>` : ''}
-</div>`;
-        }
-        function attackRaid(mult) {
-            const cost = mult === 1 ? 50 : 200;
-            if (G.coins < cost) return alert(`🪙 부족 (필요: ${cost})`);
-            if (!G.attackTeam[0]) return alert('공격 덱을 먼저 편성하세요!');
-            const boss = getRaidBoss(); if (boss.hp <= 0) return alert('보스가 이미 처치됐습니다!');
-            G.coins -= cost;
-            let pow = 0; G.attackTeam.forEach(u => { if (u) pow += calcPow(u.tier, u.stars || 1); });
-            const dmg = Math.floor(pow * (0.5 + Math.random() * 0.5) * mult * 10);
-            boss.hp = Math.max(0, boss.hp - dmg); saveRaidBoss(boss);
-            const c = JSON.parse(localStorage.getItem('Raid_Contributions') || '{}');
-            c[G.user] = (c[G.user] || 0) + dmg; localStorage.setItem('Raid_Contributions', JSON.stringify(c));
-            particles(); snd('win');
-            alert(`💥 레이드 공격!\n데미지: ${dmg.toLocaleString()}\n잔여 HP: ${boss.hp.toLocaleString()}`);
-            addPassXP(10 * mult); progressQuest('raid', mult); checkAchs(); updateUI(); renderRaid();
-        }
-        function claimRaidReward() {
-            const boss = getRaidBoss(); if (boss.hp > 0) return;
-            const c = JSON.parse(localStorage.getItem('Raid_Contributions') || '{}');
-            if (!(c[G.user] > 0)) return alert('기여도가 없습니다!');
-            const pct = c[G.user] / (boss.maxHP || 1);
-            const coinR = Math.max(100, Math.floor(boss.reward.coin * Math.min(1, pct * 10)));
-            const diaR = Math.max(5, Math.floor(boss.reward.dia * Math.min(1, pct * 10)));
-            G.coins += coinR; G.diamonds += diaR;
-            alert(`🎉 레이드 보상!\n🪙${coinR} 💎${diaR}`);
-            const curIdx = RAID_BOSSES.findIndex(b => b.id === boss.id);
-            saveRaidBoss({ ...RAID_BOSSES[(curIdx + 1) % RAID_BOSSES.length] });
-            delete c[G.user]; localStorage.setItem('Raid_Contributions', JSON.stringify(c));
-            particles(); snd('win'); updateUI(); renderRaid();
-        }
-
-        // ════════════════════════════════════════════════════════
         //  CLICKER
         // ════════════════════════════════════════════════════════
         const CLICKER_UPS = [
@@ -4229,8 +3947,7 @@ ${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,v
         function clickEraser() {
             const now = Date.now();
             if (now - lastClickTime < 300) comboCount = Math.min(20, comboCount + 1); else comboCount = 1;
-            lastClickTime = now;
-            clearTimeout(comboTimer); comboTimer = setTimeout(() => { comboCount = 0; }, 1500);
+            lastClickTime = now; clearTimeout(comboTimer); comboTimer = setTimeout(() => { comboCount = 0; }, 1500);
             const base = getClickerPPT(); const pts = Math.floor(base * (1 + comboCount * .1));
             G.clickerPts = (G.clickerPts || 0) + pts; G.clickerTotal = (G.clickerTotal || 0) + 1;
             document.getElementById('clk-pts').innerText = G.clickerPts;
@@ -4286,17 +4003,10 @@ ${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,v
         // ════════════════════════════════════════════════════════
         //  DECK BUILDER
         // ════════════════════════════════════════════════════════
-        function openDeckBuilder(target) {
-            builderTarget = target; builderSlot = null;
-            document.getElementById('deck-modal-title').innerText = target === 'attack' ? '⚔️ 공격 스쿼드 편제' : '🛡️ 수비 스쿼드 편제';
-            document.getElementById('deck-modal').style.display = 'flex';
-            renderDeckSlots(); renderDeckBackpack();
-        }
+        function openDeckBuilder(target) { builderTarget = target; builderSlot = null; document.getElementById('deck-modal-title').innerText = target === 'attack' ? '⚔️ 공격 스쿼드 편제' : '🛡️ 수비 스쿼드 편제'; document.getElementById('deck-modal').style.display = 'flex'; renderDeckSlots(); renderDeckBackpack(); }
         function closeDeckBuilder() { document.getElementById('deck-modal').style.display = 'none'; updateUI(); }
         function renderDeckSlots() {
-            const team = builderTarget === 'attack' ? G.attackTeam : G.defenseTeam;
-            const flat = flatPool();
-            const slotNames = ['선봉', '중견', '대장'];
+            const team = builderTarget === 'attack' ? G.attackTeam : G.defenseTeam; const flat = flatPool(); const slotNames = ['선봉', '중견', '대장'];
             const box = document.getElementById('deck-slots'); box.innerHTML = '';
             for (let i = 0; i < 3; i++) {
                 const slot = document.createElement('div'); slot.className = 'deck-slot' + (builderSlot === i ? ' selected' : '');
@@ -4308,8 +4018,7 @@ ${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,v
         }
         function selectSlot(idx) { builderSlot = idx; renderDeckSlots(); }
         function renderDeckBackpack() {
-            const grid = document.getElementById('deck-backpack'); grid.innerHTML = '';
-            const flat = flatPool();
+            const grid = document.getElementById('deck-backpack'); grid.innerHTML = ''; const flat = flatPool();
             const valid = G.inventory.filter(i => flat.some(f => f.id === i.imgId));
             if (!valid.length) { grid.innerHTML = '<p style="grid-column:span 5;text-align:center;padding:10px;color:var(--cream);font-weight:bold;">배낭에 지우개가 없습니다.</p>'; return; }
             valid.forEach(e => {
@@ -4325,153 +4034,6 @@ ${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,v
             const team = builderTarget === 'attack' ? G.attackTeam : G.defenseTeam;
             team[builderSlot] = eraser; builderSlot = null; renderDeckSlots();
         }
-
-        // ════════════════════════════════════════════════════════
-        //  ARENA
-        // ════════════════════════════════════════════════════════
-        function saveArenaProfile() { if (!G.user) return; localStorage.setItem(`Arena_Global_Team_${G.user}`, JSON.stringify({ user: G.user, attackTeam: G.attackTeam, defenseTeam: G.defenseTeam, arenaPoints: G.arenaPoints })); }
-        function renderDefenseHistory() {
-            const box = document.getElementById('def-log-box'); if (!box) return;
-            const logs = JSON.parse(localStorage.getItem(`Arena_Defense_Log_${G.user}`) || '[]');
-            if (!logs.length) { box.innerHTML = '<div style="color:var(--cream);text-align:center;padding-top:12px;font-weight:bold;">침공 기록이 없습니다.</div>'; return; }
-            box.innerHTML = '';
-            logs.slice(-6).reverse().forEach(log => {
-                const line = document.createElement('div'); line.className = 'def-log-line';
-                const c = log.result === '승리' ? '#6dd47e' : '#ff6b6b'; const sign = log.result === '승리' ? '+' : '-';
-                const revBtn = log.result === '패배' ? `<button class="btn sm red" style="font-size:.56rem;padding:2px 5px;" onclick="triggerRevenge('${log.attacker}')">복수</button>` : '';
-                line.innerHTML = `<span>⚔️ <b style="color:${c};">수비 ${log.result}</b> (${log.attacker})</span><span><span style="color:${c};margin-right:3px;font-weight:900;">${sign}${log.rp} RP</span>${revBtn}</span>`;
-                box.appendChild(line);
-            });
-        }
-        function triggerRevenge(atk) { revengeTarget = atk; alert(`🔥 복수혈전! [${atk}] 승리 시 RP 2배!`); startBattle(atk); }
-        function renderOpponentBoard() {
-            const board = document.getElementById('opponent-board'); if (!board) return; board.innerHTML = '';
-            saveArenaProfile(); let opponents = [];
-            for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith('Arena_Global_Team_')) { try { const o = JSON.parse(localStorage.getItem(k)); if (o) opponents.push(o); } catch (e) { } } }
-            opponents.sort((a, b) => (b.arenaPoints || 1000) - (a.arenaPoints || 1000));
-            renderPodium(opponents);
-            const comps = opponents.filter(o => o.user !== G.user);
-            if (!comps.length) { board.innerHTML = '<p style="text-align:center;padding:20px;font-size:.8rem;color:var(--brown);font-weight:bold;">경쟁 국왕이 없습니다.</p>'; return; }
-            const flat = flatPool();
-            comps.forEach(opp => {
-                const rank = opponents.findIndex(o => o.user === opp.user) + 1;
-                const card = document.createElement('div'); card.className = 'rank-row';
-                let defPow = 0, prev = '';
-                (opp.defenseTeam || []).forEach(s => { if (s) { defPow += calcPow(s.tier, s.stars || 1); const m = flat.find(f => f.id === s.imgId); prev += m ? `<img style="width:22px;height:22px;object-fit:contain;border-radius:5px;border:2px solid var(--brown-dk);background:var(--cream);" src="${m.src}">` : ''; } });
-                const ot = getTierInfo(opp.arenaPoints || 1000);
-                card.innerHTML = `<div style="text-align:left;"><span style="font-weight:900;color:var(--brown-dk);font-size:.82rem;">${rank}위. 🏰 ${opp.user}</span><div style="font-size:.65rem;color:${ot.color};font-weight:900;">${ot.name} (${opp.arenaPoints || 1000} RP)</div></div><div style="display:flex;gap:2px;">${prev}</div><div style="text-align:right;"><div style="font-size:.72rem;color:var(--red-dk);font-weight:900;margin-bottom:2px;">🛡️ ${defPow}</div><button style="padding:3px 7px;font-size:.72rem;background:linear-gradient(180deg,var(--red),var(--red-dk));color:#fff;border:2px solid var(--brown-dk);border-radius:6px;cursor:pointer;font-weight:900;box-shadow:0 2px 0 var(--brown-dk);" onclick="startBattle('${opp.user}')">격돌</button></div>`;
-                board.appendChild(card);
-            });
-        }
-        function renderPodium(sorted) {
-            const pod = document.getElementById('podium-zone'); if (!pod) return;
-            const [p1, p2, p3] = sorted;
-            pod.innerHTML = `<div class="pod-slot r2"><span style="font-size:1rem;color:#cbd5e1;">🥈</span><span class="pod-name">${p2 ? p2.user : '공석'}</span><span class="pod-rp">${p2 ? p2.arenaPoints : 1000} RP</span></div><div class="pod-slot r1"><span style="font-size:1.3rem;color:#ffd700;">👑</span><span class="pod-name" style="color:#ffd700;">${p1 ? p1.user : '공석'}</span><span class="pod-rp">${p1 ? p1.arenaPoints : 1000} RP</span></div><div class="pod-slot r3"><span style="font-size:1rem;color:#cd7f32;">🥉</span><span class="pod-name">${p3 ? p3.user : '공석'}</span><span class="pod-rp">${p3 ? p3.arenaPoints : 1000} RP</span></div>`;
-        }
-        function buyArenaTickets() { if (G.coins < 50) return alert('코인 부족'); G.coins -= 50; G.arenaPullsLeft = 10; updateUI(); }
-
-        // ════════════════════════════════════════════════════════
-        //  BATTLE ENGINE
-        // ════════════════════════════════════════════════════════
-        function startBattle(targetUser) {
-            if (G.arenaPullsLeft <= 0) return alert('🎟️ 대전권이 없습니다!');
-            if (!G.attackTeam[0] || !G.attackTeam[1] || !G.attackTeam[2]) return alert('공격 덱 3칸을 모두 채워주세요!');
-            const tData = JSON.parse(localStorage.getItem(`Arena_Global_Team_${targetUser}`));
-            if (!tData) return alert('상대 데이터가 없습니다.');
-            G.arenaPullsLeft--;
-            runBattleUI(targetUser, tData, false);
-        }
-        function runBattleUI(targetUser, tData, isDungeon, floorNum) {
-            const flat = flatPool();
-            const overlay = document.getElementById('battle-overlay');
-            const logEl = document.getElementById('battle-log');
-            const resEl = document.getElementById('battle-result');
-            overlay.style.display = 'flex'; logEl.innerText = ''; resEl.innerText = '';
-            const isRevenge = (revengeTarget === targetUser);
-            document.getElementById('battle-title').innerText = isDungeon ? `${tData.user}` : (isRevenge ? `🔥 복수혈전: ${G.user} VS ${targetUser}` : `⚔️ ${G.user} VS ${targetUser}`);
-            const enemyTeam = tData.defenseTeam || [null, null, null];
-            const aHP = [0, 0, 0], eHP = [0, 0, 0], aMax = [0, 0, 0], eMax = [0, 0, 0];
-            const aAlive = [true, true, true], eAlive = [true, true, true];
-            for (let i = 0; i < 3; i++) {
-                const a = G.attackTeam[i]; const e = enemyTeam[i];
-                const aM = a ? flat.find(f => f.id === a.imgId) : null; const eM = e ? flat.find(f => f.id === e.imgId) : null;
-                aHP[i] = aMax[i] = a ? calcPow(a.tier, a.stars || 1) * 3 : 1;
-                eHP[i] = eMax[i] = e ? calcPow(e.tier, e.stars || 1) * 3 : 1;
-                document.getElementById('ai' + i).src = aM ? aM.src : ''; document.getElementById('an' + i).innerText = aM ? aM.name.slice(0, 8) : '공석';
-                document.getElementById('as' + i).innerText = (a?.skills || []).map(id => SKILL_POOL.find(s => s.id === id)?.name || '').join(' ');
-                document.getElementById('ei' + i).src = eM ? eM.src : ''; document.getElementById('en' + i).innerText = isDungeon ? `👹${(eM?.name || '없음').slice(0, 6)}` : (eM ? eM.name.slice(0, 8) : '공석');
-                document.getElementById('es' + i).innerText = (e?.skills || []).map(id => SKILL_POOL.find(s => s.id === id)?.name || '').join(' ');
-                updHP(i, 'a', aHP[i], aMax[i]); updHP(i, 'e', eHP[i], eMax[i]);
-                document.getElementById('au' + i).classList.remove('unit-dead'); document.getElementById('eu' + i).classList.remove('unit-dead');
-            }
-            function updHP(idx, side, cur, max) { const pct = Math.max(0, Math.floor(cur / max * 100)); document.getElementById((side === 'a' ? 'ahb' : 'ehb') + idx).style.width = pct + '%'; document.getElementById((side === 'a' ? 'aht' : 'eht') + idx).innerText = Math.max(0, cur); }
-            function spawnDmg(idx, side, dmg) {
-                const stage = document.getElementById('battle-stage');
-                const unit = document.getElementById((side === 'a' ? 'au' : 'eu') + idx);
-                const rect = unit.getBoundingClientRect(); const sr = stage.getBoundingClientRect();
-                const el = document.createElement('div'); el.className = 'dmg-num'; el.innerText = '-' + dmg;
-                el.style.cssText = `left:${rect.left - sr.left + 16}px;top:${rect.top - sr.top}px;`;
-                stage.appendChild(el); setTimeout(() => el.remove(), 950);
-            }
-            function addLog(t) { logEl.innerText += t + '\n'; logEl.scrollTop = logEl.scrollHeight; }
-            let tick = 0;
-            function battleTick() {
-                if (tick >= 30) return endBattle();
-                for (let i = 0; i < 3; i++) {
-                    if (!aAlive[i] || !eAlive[i]) continue;
-                    const a = G.attackTeam[i]; const e = enemyTeam[i];
-                    const aS = a?.skills || []; const eS = e?.skills || [];
-                    let aDmg = Math.floor(calcPow(a?.tier || 'Trash', a?.stars || 1) * (0.2 + Math.random() * .15));
-                    let eDmg = Math.floor(calcPow(e?.tier || 'Trash', e?.stars || 1) * (0.2 + Math.random() * .15));
-                    if (aS.includes('first')) aDmg = Math.floor(aDmg * 1.2); if (eS.includes('first')) eDmg = Math.floor(eDmg * 1.2);
-                    if (aS.includes('crit') && Math.random() < .3) { aDmg *= 2; addLog(`🎯 아군${i + 1} 크리!`); }
-                    if (eS.includes('crit') && Math.random() < .3) { eDmg *= 2; addLog(`💥 적${i + 1} 크리!`); }
-                    if (aS.includes('burn')) aDmg += 15; if (eS.includes('burn')) eDmg += 15;
-                    if (aS.includes('shield')) eDmg = Math.floor(eDmg * .7); if (eS.includes('shield')) aDmg = Math.floor(aDmg * .7);
-                    if (eS.includes('freeze') && Math.random() < .3) { aDmg = 0; addLog(`❄️ 아군${i + 1} 빙결!`); }
-                    if (aS.includes('freeze') && Math.random() < .3) { eDmg = 0; addLog(`❄️ 적${i + 1} 빙결!`); }
-                    if (aS.includes('drain')) aHP[i] = Math.min(aMax[i], aHP[i] + Math.floor(aDmg * .25));
-                    eHP[i] -= aDmg; aHP[i] -= eDmg;
-                    const auEl = document.getElementById('au' + i); const euEl = document.getElementById('eu' + i);
-                    auEl.classList.add('unit-atk'); euEl.classList.add('unit-hit');
-                    setTimeout(() => { auEl.classList.remove('unit-atk'); euEl.classList.remove('unit-hit'); }, 350);
-                    spawnDmg(i, 'a', aDmg); spawnDmg(i, 'e', eDmg);
-                    updHP(i, 'a', aHP[i], aMax[i]); updHP(i, 'e', eHP[i], eMax[i]);
-                    if (aHP[i] <= 0) { aAlive[i] = false; document.getElementById('au' + i).classList.add('unit-dead'); addLog(`💀 아군${i + 1} 전사!`); }
-                    if (eHP[i] <= 0) { eAlive[i] = false; document.getElementById('eu' + i).classList.add('unit-dead'); addLog(`💀 적${i + 1} 전사!`); }
-                }
-                tick++;
-                if (aAlive.every(x => !x) || eAlive.every(x => !x)) return endBattle();
-                setTimeout(battleTick, 700);
-            }
-            function endBattle() {
-                const myD = aAlive.filter(x => !x).length, enD = eAlive.filter(x => !x).length;
-                const won = enD > myD || (enD === myD && aHP.reduce((a, b) => a + b, 0) >= eHP.reduce((a, b) => a + b, 0));
-                if (isDungeon) { grantDungeonReward(floorNum, won, resEl); return; }
-                let ptVar = Math.floor(Math.random() * 11) + 15; if (isRevenge) ptVar *= 2;
-                if (won) {
-                    G.arenaPoints += ptVar; G.coins += 80; G.diamonds += 15;
-                    resEl.innerText = `🏆 승리! (+80🪙 +15💎 +${ptVar} RP)`; resEl.style.color = '#ffd700';
-                    tData.arenaPoints = Math.max(500, (tData.arenaPoints || 1000) - ptVar);
-                    localStorage.setItem(`Arena_Global_Team_${targetUser}`, JSON.stringify(tData));
-                    const tl = JSON.parse(localStorage.getItem(`Arena_Defense_Log_${targetUser}`) || '[]');
-                    tl.push({ attacker: G.user, result: '패배', rp: ptVar }); localStorage.setItem(`Arena_Defense_Log_${targetUser}`, JSON.stringify(tl));
-                    G.achStats.battleWins = (G.achStats.battleWins || 0) + 1;
-                    addPassXP(20); progressQuest('win', 1); checkAchs(); snd('win');
-                } else {
-                    G.arenaPoints = Math.max(500, G.arenaPoints - ptVar); G.coins += 20;
-                    resEl.innerText = `☠️ 패배.. (+20🪙 -${ptVar} RP)`; resEl.style.color = '#ff4757';
-                    tData.arenaPoints = (tData.arenaPoints || 1000) + Math.floor(ptVar * .5);
-                    localStorage.setItem(`Arena_Global_Team_${targetUser}`, JSON.stringify(tData));
-                    const tl = JSON.parse(localStorage.getItem(`Arena_Defense_Log_${targetUser}`) || '[]');
-                    tl.push({ attacker: G.user, result: '승리', rp: Math.floor(ptVar * .5) }); localStorage.setItem(`Arena_Defense_Log_${targetUser}`, JSON.stringify(tl));
-                    snd('lose');
-                }
-                revengeTarget = null; updateUI(); renderOpponentBoard();
-            }
-            setTimeout(battleTick, 500);
-        }
-        function closeBattle() { document.getElementById('battle-overlay').style.display = 'none'; }
 
         // ════════════════════════════════════════════════════════
         //  DUNGEON
@@ -4492,12 +4054,10 @@ ${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,v
         function renderDungeon() {
             const grid = document.getElementById('dungeon-floor-grid'); if (!grid) return;
             document.getElementById('dungeon-best').innerText = (G.dungeonProgress || 0) + '층';
-            grid.innerHTML = '';
-            const today = todayStr();
+            grid.innerHTML = ''; const today = todayStr();
             if (G.dungeonLastDate !== today) { G.dungeonClearedToday = []; G.dungeonLastDate = today; }
             DFLOORS.forEach(f => {
-                const cleared = G.dungeonClearedToday.includes(f.f);
-                const locked = f.f > (G.dungeonProgress || 0) + 1;
+                const cleared = G.dungeonClearedToday.includes(f.f); const locked = f.f > (G.dungeonProgress || 0) + 1;
                 const box = document.createElement('div');
                 box.style.cssText = `background:${locked ? 'rgba(74,44,23,.7)' : 'linear-gradient(180deg,var(--cream),#ffd89e)'};border:4px solid ${locked ? 'var(--brown)' : DCOLS[f.d]};border-radius:14px;padding:11px;text-align:center;cursor:${locked || cleared ? 'default' : 'pointer'};opacity:${locked ? '.55' : '1'};box-shadow:0 5px 0 var(--brown-dk);color:var(--brown-dk);`;
                 box.innerHTML = `<div style="font-size:1.4rem;">${f.e}</div><div style="font-size:.88rem;font-weight:900;margin:3px 0;">${f.f}층 — ${f.name}</div><div style="font-size:.65rem;color:${DCOLS[f.d]};font-weight:900;margin-bottom:4px;background:rgba(74,44,23,.85);padding:2px 6px;border-radius:6px;display:inline-block;">[${f.d}]</div><div style="font-size:.7rem;font-weight:bold;margin-bottom:4px;">적: ${f.bT} ${'⭐'.repeat(f.bS)} | 🪙${f.cost}</div><div style="font-size:.65rem;color:var(--green-dk);font-weight:900;margin-bottom:6px;">🎁 🪙${f.coin[0]}~${f.coin[1]}${f.dia ? ` 💎${f.dia}` : ''}${f.pulls ? ` 🎰+${f.pulls}` : ''}</div>${cleared ? '<div style="background:linear-gradient(180deg,#9eff9e,#2d8e3c);border:2px solid var(--brown-dk);border-radius:8px;padding:3px;font-size:.72rem;color:#fff;font-weight:900;">✅ 오늘 클리어!</div>' : locked ? `<div style="font-size:.7rem;color:var(--cream);font-weight:bold;">🔒 ${f.f - 1}층 필요</div>` : `<button onclick="enterDungeon(${f.f})" style="width:100%;padding:6px;background:linear-gradient(180deg,var(--red),var(--red-dk));border:3px solid var(--brown-dk);color:#fff;font-weight:900;border-radius:9px;cursor:pointer;font-size:.8rem;box-shadow:0 3px 0 var(--brown-dk);">⚔️ 입장</button>`}`;
@@ -4513,9 +4073,7 @@ ${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,v
             if (G.dungeonClearedToday.includes(floorNum)) return alert('오늘 이미 클리어한 층입니다!');
             if (!confirm(`${f.e} [${f.f}층] ${f.name}\n비용: 🪙${f.cost}\n진행?`)) return;
             G.coins -= f.cost; updateUI();
-            const flat = flatPool();
-            const bPool = flat.filter(x => x.tier === f.bT);
-            const fakeDef = [null, null, null];
+            const flat = flatPool(); const bPool = flat.filter(x => x.tier === f.bT); const fakeDef = [null, null, null];
             for (let i = 0; i < 3; i++) { if (bPool.length) { const p = bPool[Math.floor(Math.random() * bPool.length)]; fakeDef[i] = { id: 'boss' + i, imgId: p.id, tier: f.bT, stars: f.bS, power: calcPow(f.bT, f.bS), name: p.name, skills: rndSkills(f.bT) }; } }
             const bossData = { user: `${f.e} ${f.f}층 — ${f.name}`, defenseTeam: fakeDef, arenaPoints: 0, attackTeam: [null, null, null] };
             runBattleUI(null, bossData, true, floorNum);
@@ -4558,10 +4116,7 @@ ${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,v
         }
         function progressQuest(type, amt) {
             if (!G.quests) return;
-            Object.keys(G.quests).forEach(qid => {
-                const def = QUEST_POOL.find(q => q.id === qid);
-                if (def && def.type === type && !G.quests[qid].claimed) G.quests[qid].progress = Math.min(def.target, G.quests[qid].progress + amt);
-            });
+            Object.keys(G.quests).forEach(qid => { const def = QUEST_POOL.find(q => q.id === qid); if (def && def.type === type && !G.quests[qid].claimed) G.quests[qid].progress = Math.min(def.target, G.quests[qid].progress + amt); });
         }
         function claimQuest(qid) {
             const def = QUEST_POOL.find(q => q.id === qid); if (!def) return;
@@ -4597,10 +4152,7 @@ ${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,v
         ];
         function checkAchs() {
             if (!G.achievements) G.achievements = {};
-            ACHS.forEach(a => {
-                if (!G.achievements[a.id]) G.achievements[a.id] = { earned: false, claimed: false };
-                if (!G.achievements[a.id].earned && (G.achStats?.[a.stat] || 0) >= a.target) G.achievements[a.id].earned = true;
-            });
+            ACHS.forEach(a => { if (!G.achievements[a.id]) G.achievements[a.id] = { earned: false, claimed: false }; if (!G.achievements[a.id].earned && (G.achStats?.[a.stat] || 0) >= a.target) G.achievements[a.id].earned = true; });
         }
         function claimAch(aid) {
             const a = ACHS.find(x => x.id === aid); if (!a) return;
@@ -4627,10 +4179,7 @@ ${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,v
         function getMineRate() { return 20 + (G.mineLevel - 1) * 15; }
         function getMineCap() { return 500 + (G.mineLevel - 1) * 300; }
         function getMineUpCost() { return 500 * G.mineLevel; }
-        function calcMineStored() {
-            const rate = getMineRate(); const elapsed = (Date.now() - G.mineLastHarvest) / (1000 * 60 * 60);
-            const gained = Math.floor(rate * elapsed); G.mineStored = Math.min(getMineCap(), gained); return G.mineStored;
-        }
+        function calcMineStored() { const rate = getMineRate(); const elapsed = (Date.now() - G.mineLastHarvest) / (1000 * 60 * 60); const gained = Math.floor(rate * elapsed); G.mineStored = Math.min(getMineCap(), gained); return G.mineStored; }
         function harvestMine() {
             const amt = calcMineStored(); if (amt < 1) return alert('아직 채굴된 자원이 없습니다!');
             G.coins += amt; G.mineLastHarvest = Date.now(); G.mineStored = 0;
@@ -4682,8 +4231,7 @@ ${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,v
             particles(); snd('win'); saveG(); updateUI(); renderWorld();
         }
         function renderWorld() {
-            regenStamina();
-            document.getElementById('world-stam').innerText = G.stamina || 0;
+            regenStamina(); document.getElementById('world-stam').innerText = G.stamina || 0;
             const grid = document.getElementById('world-grid'); if (!grid) return; grid.innerHTML = '';
             WREGIONS.forEach(r => {
                 const locked = (G.dungeonProgress || 0) < r.minLv;
@@ -4758,8 +4306,7 @@ ${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,v
             it.fn(); snd('coin'); particles(); alert(`✅ ${it.name} 구매 완료!`); updateUI();
         }
         function renderShopInto(container) {
-            container.innerHTML = '';
-            const grid = document.createElement('div'); grid.className = 'shop-grid';
+            container.innerHTML = ''; const grid = document.createElement('div'); grid.className = 'shop-grid';
             SHOP_ITEMS.forEach(it => {
                 const box = document.createElement('div'); box.className = 'shop-item';
                 box.innerHTML = `<div class="shop-icon">${it.icon}</div><div class="shop-name">${it.name}</div><div class="shop-desc">${it.desc}</div><button class="shop-buy${it.cur === 'dia' ? ' dia' : ''}" onclick="buyShopItem('${it.id}')">${it.cur === 'coin' ? '🪙' : '💎'}${it.cost}</button>`;
@@ -4768,12 +4315,243 @@ ${boss.hp <= 0 ? `<div style="margin-top:7px;background:linear-gradient(180deg,v
             container.appendChild(grid);
         }
 
-        // ════════════════════════════════════════
-        //  INIT
-        // ════════════════════════════════════════
+        // ════════════════════════════════════════════════════════
+        //  GACHA ENGINE (원본과 동일)
+        // ════════════════════════════════════════════════════════
+        let currentMult = 1, isRolling = false, pendingResults = [], blackoutResult = null;
+
+        function getAdjustedRates(mult) { const boost = Math.log2(mult || 1); const rates = {}; const keys = Object.keys(BASE_RATES); keys.forEach((k, i) => { rates[k] = Math.max(0.000001, BASE_RATES[k] * Math.pow(0.85, boost * (keys.length - 1 - i) * 0.08)); }); const total = Object.values(rates).reduce((a, b) => a + b, 0); keys.forEach(k => rates[k] = rates[k] / total * 100); return rates; }
+        function rollGrade(mult) { const rates = getAdjustedRates(mult); const r = Math.random() * 100; let acc = 0; for (const [grade, rate] of Object.entries(rates)) { acc += rate; if (r < acc) return grade; } return 'Trash'; }
+        function rollChain(mult) { const chainRate = CHAIN_RATES[mult] || 0; return Math.random() * 100 < chainRate; }
+
+        function buildReel() {
+            const reel = document.getElementById('slot-reel'); reel.innerHTML = '';
+            const items = [{ label: '2×', cls: 'grade-2x' }, { label: 'TRASH', cls: 'grade-Trash' }, { label: 'COMMON', cls: 'grade-Common' }, { label: '2×', cls: 'grade-2x' }, { label: 'UNCOMMON', cls: 'grade-Uncommon' }, { label: 'EPIC', cls: 'grade-Epic' }, { label: '2×', cls: 'grade-2x' }, { label: 'MYTHIC', cls: 'grade-Mythic' }, { label: 'LEGENDARY', cls: 'grade-Legendary' }, { label: '2×', cls: 'grade-2x' }, { label: 'BEAST', cls: 'grade-Beast' }, { label: 'CELESTIAL', cls: 'grade-Celestial' }, { label: 'ULTRA', cls: 'grade-Ultra' }, { label: 'HYPER', cls: 'grade-Hyper' }, { label: 'INFINITY', cls: 'grade-Infinity' }, { label: '? ? ?', cls: 'grade-' }];
+            for (let r = 0; r < 3; r++) { items.forEach(it => { const div = document.createElement('div'); div.className = 'slot-item'; div.innerHTML = `<span class="slot-text ${it.cls}">${it.label}</span>`; reel.appendChild(div); }); }
+        }
+        function getReelItemIndex(label) { const items = ['2×', 'TRASH', 'COMMON', '2×', 'UNCOMMON', 'EPIC', '2×', 'MYTHIC', 'LEGENDARY', '2×', 'BEAST', 'CELESTIAL', 'ULTRA', 'HYPER', 'INFINITY', '? ? ?']; return items.indexOf(label); }
+        function gradeToLabel(grade) { if (grade === '???') return '? ? ?'; if (grade === '2x') return '2×'; return grade.toUpperCase(); }
+        function spinSlot(targetLabel, onDone) {
+            const reel = document.getElementById('slot-reel'); const itemH = 52; const totalItems = 16;
+            const targetIdx = getReelItemIndex(targetLabel) + totalItems; const targetY = -(targetIdx * itemH) + (160 / 2) - (itemH / 2);
+            reel.style.transition = 'none'; reel.style.transform = `translateY(0)`;
+            setTimeout(() => { reel.style.transition = 'transform 0.3s linear'; reel.style.transform = `translateY(${-(totalItems * itemH * 0.3)}px)`; setTimeout(() => { reel.style.transition = 'transform 1.8s cubic-bezier(0.25,0.1,0.1,1)'; reel.style.transform = `translateY(${targetY}px)`; setTimeout(onDone, 1900); }, 300); }, 50);
+        }
+        async function doSinglePull() {
+            if (isRolling) return;
+            if (G.dailyPullsLeft >= 1) { G.dailyPullsLeft--; } else { if (G.diamonds < 10) return alert('💎 다이아 부족 (필요: 10)'); G.diamonds -= 10; }
+            isRolling = true; currentMult = 1; updateMultDisplay(1); showSlotArena(); updateFreeCount();
+            await runChainPull();
+        }
+
+        async function runChainPull() {
+            const goChain = rollChain(currentMult);
+            if (currentMult === 1024 && goChain) {
+                await spinSlotAsync('2×');
+                await showMultiplierAnnounce(2048);
+                currentMult = 2048; updateMultDisplay(2048);
+                await delay(500); triggerBlackout(); return;
+            }
+            if (goChain && currentMult < 1024) {
+                await spinSlotAsync('2×');
+                const nextIdx = MULT_CHAIN.indexOf(currentMult) + 1;
+                const nextMult = MULT_CHAIN[nextIdx] || currentMult * 2;
+                await showMultiplierAnnounce(nextMult);
+                currentMult = nextMult; updateMultDisplay(nextMult);
+                await delay(400); await runChainPull();
+            } else {
+                const grade = rollGrade(currentMult);
+                await spinSlotAsync(gradeToLabel(grade));
+                await delay(300); grantEraser(grade);
+            }
+        }
+
+        function spinSlotAsync(label) { return new Promise(res => spinSlot(label, res)); }
+        function delay(ms) { return new Promise(res => setTimeout(res, ms)); }
+
+        function updateMultDisplay(mult) {
+            const el = document.getElementById('mult-value-txt');
+            el.className = 'mult-' + mult;
+            el.innerHTML = mult + '<span style="font-size:.5em;opacity:.6;">×</span>';
+        }
+
+        function showMultiplierAnnounce(mult) {
+            return new Promise(res => {
+                const wrap = document.getElementById('mult-announce-wrap');
+                const txt = document.getElementById('mult-announce-text');
+                const flash = document.getElementById('mult-flash-bg');
+                txt.textContent = mult + '×';
+                const colors = { 2: '#fcd34d', 4: '#fb923c', 8: '#f87171', 16: '#e879f9', 32: '#a78bfa', 64: '#60a5fa', 128: '#34d399', 256: '#ffffff', 512: '#f472b6', 1024: '#fcd34d', 2048: '#ff0080' };
+                flash.style.background = colors[mult] || '#fcd34d';
+                wrap.style.display = 'block'; snd('gacha');
+                setTimeout(() => { wrap.style.display = 'none'; res(); }, 900);
+            });
+        }
+
+        function grantEraser(grade) {
+            const pool = flatPool();
+            const tierPool = pool.filter(x => x.tier === grade);
+            const usePool = tierPool.length ? tierPool : pool;
+            if (!usePool.length) { alert(`[${grade}] 이미지가 없습니다!`); isRolling = false; showPullBtns(); return; }
+            const t = usePool[Math.floor(Math.random() * usePool.length)];
+            const card = { id: uid(), imgId: t.id, tier: grade, stars: 1, power: calcPow(grade, 1), name: t.name, skills: rndSkills(grade) };
+            G.inventory.push(card);
+            if (!G.codexUnlocked.includes(t.id)) G.codexUnlocked.push(t.id);
+            G.achStats.gachaCount = (G.achStats.gachaCount || 0) + 1;
+            addPassXP(5); progressQuest('gacha', 1); checkAchs();
+            showResult(grade, t, card); particles(); snd('win'); updateUI();
+        }
+
+        function showSlotArena() {
+            document.getElementById('slot-arena').style.display = 'flex';
+            document.getElementById('pull-btns-row').style.display = 'none';
+            document.getElementById('result-reveal').style.display = 'none';
+            document.getElementById('multi-reveal').style.display = 'none';
+            buildReel();
+        }
+
+        function showPullBtns() {
+            document.getElementById('slot-arena').style.display = 'flex';
+            document.getElementById('pull-btns-row').style.display = 'flex';
+            document.getElementById('result-reveal').style.display = 'none';
+            document.getElementById('multi-reveal').style.display = 'none';
+        }
+
+        function showResult(grade, imgData, card) {
+            const reveal = document.getElementById('result-reveal');
+            const gradeInfo = GRADES.find(g => g.id === grade) || { label: grade, color: '#fff' };
+            document.getElementById('result-grade-txt').textContent = gradeInfo.label;
+            document.getElementById('result-grade-txt').style.cssText = `color:${gradeInfo.color};text-shadow:0 0 40px ${gradeInfo.color},0 0 80px ${gradeInfo.color}60`;
+            document.getElementById('result-img').src = imgData.src;
+            document.getElementById('result-img').style.filter = `drop-shadow(0 0 30px ${gradeInfo.color})`;
+            document.getElementById('result-name').textContent = imgData.name;
+            document.getElementById('result-name').style.color = gradeInfo.color;
+            document.getElementById('slot-arena').style.display = 'none';
+            reveal.style.display = 'flex'; isRolling = false;
+        }
+
+        function hideResult() {
+            document.getElementById('result-reveal').style.display = 'none';
+            currentMult = 1; updateMultDisplay(1); showPullBtns(); buildReel(); updateUI();
+        }
+
+        async function doMultiPull() {
+            if (isRolling) return;
+            if (G.diamonds < 80) return alert('💎 부족 (필요: 80)');
+            G.diamonds -= 80; isRolling = true;
+            const pool = flatPool();
+            if (!pool.length) { isRolling = false; return alert('이미지를 먼저 등록해주세요!'); }
+            const results = [];
+            for (let i = 0; i < 10; i++) {
+                const grade = rollGrade(1);
+                const tierPool = pool.filter(x => x.tier === grade);
+                const usePool = tierPool.length ? tierPool : pool;
+                const t = usePool[Math.floor(Math.random() * usePool.length)];
+                const card = { id: uid(), imgId: t.id, tier: grade, stars: 1, power: calcPow(grade, 1), name: t.name, skills: rndSkills(grade) };
+                G.inventory.push(card);
+                if (!G.codexUnlocked.includes(t.id)) G.codexUnlocked.push(t.id);
+                results.push({ grade, img: t, card });
+            }
+            G.achStats.gachaCount = (G.achStats.gachaCount || 0) + 10;
+            addPassXP(50); progressQuest('gacha', 10); checkAchs();
+            showMultiResult(results); particles(); snd('gacha'); updateUI(); isRolling = false;
+        }
+
+        function showMultiResult(results) {
+            const grid = document.getElementById('multi-results-grid'); grid.innerHTML = '';
+            document.getElementById('slot-arena').style.display = 'none';
+            document.getElementById('pull-btns-row').style.display = 'none';
+            results.forEach(r => {
+                const gradeInfo = GRADES.find(g => g.id === r.grade) || { label: r.grade, color: '#fff' };
+                const card = document.createElement('div'); card.className = 'mini-result-card';
+                card.innerHTML = `<img src="${r.img.src}"><div class="mini-grade-txt" style="color:${gradeInfo.color};">${gradeInfo.label}</div><div style="font-size:.55rem;color:rgba(255,255,255,.5);margin-top:2px;">${r.img.name}</div>`;
+                grid.appendChild(card);
+            });
+            document.getElementById('multi-reveal').style.display = 'flex';
+        }
+
+        function hideMultiResult() {
+            document.getElementById('multi-reveal').style.display = 'none';
+            currentMult = 1; updateMultDisplay(1); showPullBtns(); buildReel(); updateUI();
+        }
+
+        function triggerBlackout() {
+            isRolling = false;
+            const overlay = document.getElementById('blackout-overlay');
+            const resultEl = document.getElementById('blackout-result');
+            const claimBtn = document.getElementById('blackout-claim-btn');
+            resultEl.style.display = 'none'; claimBtn.style.display = 'none';
+            overlay.style.display = 'flex'; snd('lose');
+            setTimeout(() => {
+                const r = Math.random() * 100;
+                const result = r < 50 ? '???' : r < 75 ? 'COLOR' : 'NOT';
+                blackoutResult = result;
+                resultEl.style.display = 'block';
+                if (result === 'COLOR') { resultEl.className = 'blackout-result color-grade'; resultEl.textContent = '✦ COLOR ✦'; }
+                else if (result === 'NOT') { resultEl.className = 'blackout-result not-grade'; resultEl.textContent = '✕ NOT ✕'; }
+                else { resultEl.className = 'blackout-result secret-grade'; resultEl.textContent = '? ? ?'; }
+                setTimeout(() => { claimBtn.style.display = 'block'; }, 1000);
+                particles(); snd('win');
+            }, 3000);
+        }
+
+        function claimBlackout() {
+            document.getElementById('blackout-overlay').style.display = 'none';
+            const pool = flatPool();
+            if (blackoutResult === '???') {
+                const usePool = pool.filter(x => x.tier === '???').length ? pool.filter(x => x.tier === '???') : pool;
+                const t = usePool[Math.floor(Math.random() * usePool.length)];
+                const card = { id: uid(), imgId: t.id, tier: '???', stars: 1, power: calcPow('???', 1), name: t.name, skills: rndSkills('???') };
+                G.inventory.push(card); if (!G.codexUnlocked.includes(t.id)) G.codexUnlocked.push(t.id);
+                showResult('???', t, card);
+            } else if (blackoutResult === 'COLOR') {
+                const cp = imgPool.SECRET_COLOR;
+                if (cp && cp.length) {
+                    const t = cp[Math.floor(Math.random() * cp.length)];
+                    G.inventory.push({ id: uid(), imgId: t.id, tier: 'COLOR', stars: 1, power: 9999, name: t.name, skills: rndSkills('???') });
+                    document.getElementById('result-grade-txt').innerHTML = '<span style="background:linear-gradient(135deg,#ff0080,#ff8c00,#ffd700,#00ff88,#0080ff,#8000ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">✦ COLOR ✦</span>';
+                    document.getElementById('result-img').src = t.src; document.getElementById('result-name').textContent = t.name;
+                    document.getElementById('slot-arena').style.display = 'none'; document.getElementById('result-reveal').style.display = 'flex'; isRolling = false;
+                } else { alert('🌈 COLOR! 관리자에서 SECRET_COLOR 이미지 등록 필요'); showPullBtns(); }
+            } else {
+                const np = imgPool.SECRET_NOT;
+                if (np && np.length) {
+                    const t = np[Math.floor(Math.random() * np.length)];
+                    G.inventory.push({ id: uid(), imgId: t.id, tier: 'NOT', stars: 1, power: 0, name: t.name, skills: [] });
+                    document.getElementById('result-grade-txt').innerHTML = '<span style="color:#ff3333;">✕ NOT ✕</span>';
+                    document.getElementById('result-img').src = t.src; document.getElementById('result-name').textContent = t.name;
+                    document.getElementById('slot-arena').style.display = 'none'; document.getElementById('result-reveal').style.display = 'flex'; isRolling = false;
+                } else { alert('❌ NOT! 관리자에서 SECRET_NOT 이미지 등록 필요'); showPullBtns(); }
+            }
+            G.achStats.gachaCount = (G.achStats.gachaCount || 0) + 1;
+            addPassXP(200); checkAchs(); updateUI();
+        }
+
+        function doPull(count) { if (count === 1) doSinglePull(); else doMultiPull(); }
+
+        function openGachaFS() {
+            if (!G.user) return;
+            document.getElementById('gacha-fullscreen').style.display = 'flex';
+            currentMult = 1; isRolling = false; updateMultDisplay(1); buildReel();
+            showPullBtns(); updateFreeCount();
+        }
+
+        function closeGachaFS() {
+            if (isRolling) return;
+            document.getElementById('gacha-fullscreen').style.display = 'none';
+            isRolling = false; updateUI();
+        }
+
+        function updateFreeCount() {
+            const el = document.getElementById('fs-free-count');
+            if (el) el.textContent = G.dailyPullsLeft || 0;
+        }
+
         window.addEventListener('load', async () => {
+            if (!window._fbReady) await new Promise(res => document.addEventListener('firebase-ready', res, { once: true }));
             await openDB();
             setInterval(() => { regenStamina(); if (G.user) updateUI(); }, 60000);
+            setInterval(() => { if (G.user) calcMineStored(); }, 600000);
         });
     </script>
 </body>
